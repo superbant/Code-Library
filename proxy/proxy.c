@@ -461,9 +461,5 @@ int main(int argc, char **argv)
     }
     load_tcp_proxy_args(T_WAITING,g_lip,g_lport,g_dip,g_dport);
 
-    while(1);
-    {
-        sleep(1000); 
-    }
     return 0;
 }
