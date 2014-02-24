@@ -133,7 +133,6 @@ int Connect(int sockfd, struct sockaddr *serv_addr, socklen_t addrlen, int tm_ou
 
 int Recv(int s, void * buf, int len, int flags)
 {
-    puts("Recv begin");
     int ret = -1;
 
     if ((ret = recv(s, buf, len, flags)) < 0) 
@@ -141,7 +140,6 @@ int Recv(int s, void * buf, int len, int flags)
         if (errno != ECONNRESET)
             printf("recv() error :%s", strerror(errno));
     }
-    puts("Recv end");
     return ret;
 }
 
@@ -170,7 +168,6 @@ int Send(int s, const char * buf, int len, int flags)
 
 int tcp_data_deal(int rsock, int ssock)
 {
-    puts("tcp_data_deal begin"); 
     char data_buf[BUFF_SIZE];
     int recvsize =0;
     int sendsize =0;
@@ -184,7 +181,6 @@ int tcp_data_deal(int rsock, int ssock)
     {
         ret =  -1;
     }
-    puts("tcp_data_deal end"); 
     return ret;
 }
 
@@ -218,7 +214,6 @@ int insert_epoll_event(int epfd, int sockfd, int *curfds)
 void * run_tcp_proxy(void *arg)
 {
 
-    puts("run_tcp_proxy begin");
 	int    ret = -1;
 	int    cli_sock = -1;
 	int    svr_sock = -1;
@@ -297,7 +292,6 @@ void * run_tcp_proxy(void *arg)
         }
 	}
 
-    puts("run_tcp_proxy end");
 __session_end:
 
 	close(cli_sock);
@@ -306,10 +300,11 @@ __session_end:
 	free(prun);
 	return NULL;
 }
-
+/*
+* 线程处理程序  监听
+*/
 void* start_tcp_proxy(void * args)
 {
-    puts("start_tcp_proxy begin");
     struct sockaddr_in cli_addr, svr_addr; 
     socklen_t cli_addr_len;
     int listenfd=-1, connfd = -1;
@@ -356,10 +351,12 @@ void* start_tcp_proxy(void * args)
             pthread_detach(thread_id);
         }
     }
-    puts("start_tcp_proxy end");
     free(pstart);
     return ret;
 }
+/*
+*启动线程
+*/
 
 int load_tcp_proxy(int thread_state, void * args)
 {
@@ -367,9 +364,7 @@ int load_tcp_proxy(int thread_state, void * args)
     pthread_t  tid;
 
 
-    puts("load_tcp_proxy begin");
     tret = pthread_create(&tid, NULL, start_tcp_proxy, (void *)args);
-    puts("load_tcp_proxy end");
     if (tret != 0)
         return -1; 
 
@@ -380,7 +375,9 @@ int load_tcp_proxy(int thread_state, void * args)
 
     return 1;
 }
-
+/*
+* 启动tcp代理  参数准备及检查
+*/
 int load_tcp_proxy_args(int thread_state,u_long lip, u_short lport, u_long dip, u_short dport)
 {
 
@@ -391,9 +388,7 @@ int load_tcp_proxy_args(int thread_state,u_long lip, u_short lport, u_long dip, 
     args->dip = dip;
     args->dport = dport;
 
-    puts("__load_tcp_proxy_args begin");
     load_tcp_proxy(thread_state, (void*)args);
-    puts("__load_tcp_proxy_args end");
     
     return 0;
 
@@ -401,7 +396,7 @@ int load_tcp_proxy_args(int thread_state,u_long lip, u_short lport, u_long dip, 
 
 int parseargs(int argc, char** argv)
 {
-    const char* const short_options = "l:p:s:o:";
+    const char* short_options = "l:p:s:o:";
     struct option long_options[] = {
         { "lip",         1,   NULL,    'l'},
         { "lport",       1,   NULL,    'p'},
