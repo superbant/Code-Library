@@ -1,18 +1,3 @@
-/********************************************************************************************
-功能：
-演示从mtp.conf文件中读取配置项，并将其保存在便于查找的"KEY-VALUE"的HASH表中。对配置文件的读取
-使用了libconfig库。
-
-注意：
-1.编译时需要首先安装libconfig库
-2.编译方法
-cc vp_config.c -g  -lconfig -o vpconfig
-
-Autor: Mao Junhong
-Date: 2013-12-4
-*********************************************************************************************/
-
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -148,7 +133,6 @@ static void init_crc32_table()
 	}
 }
 
-//crc32 caculation
 u32 crc32(u8 *buf, int len)
 {
 	u32 ret = 0xFFFFFFFF;
@@ -194,9 +178,6 @@ int group_read_config_item(config_t * cfg,char * group_name,config_setting_t * c
 	u32 index = 0;
 	//platform config
 	sprintf(cfg_node->key,"%s.%s.%s",group_name,channel->name,item->name);
-	//sprintf(cfg_node->key,"%s",item->name);
-	//printf("key:%s\n",cfg_node->key);
-	//printf("item name:%s\n",item->name);
 	cfg_node->key_len = strlen(cfg_node->key);
 	cfg_node->crc = crc32(cfg_node->key,	cfg_node->key_len);
 	cfg_node->type = item->type;
@@ -207,7 +188,6 @@ int group_read_config_item(config_t * cfg,char * group_name,config_setting_t * c
 			printf("read %s string error\n",cfg_node->key);
 			return -1;
 		}
-		//printf("%s\n",cfg_node->v.s_value);
 	}
 	else if(item->type == CONFIG_TYPE_INT)
 	{
@@ -216,7 +196,6 @@ int group_read_config_item(config_t * cfg,char * group_name,config_setting_t * c
 			printf("read %s int error\n",item->name);
 			return -1;
 		}
-		//printf("%d\n",cfg_node->v.i_value);
 	}
 	else if(item->type == CONFIG_TYPE_BOOL)
 	{
@@ -226,11 +205,9 @@ int group_read_config_item(config_t * cfg,char * group_name,config_setting_t * c
 			printf("read %s bool error\n", channel, item->name);
 			return -1;
 		}
-		//printf("%d\n",cfg_node->v.i_value);
 	}
 	index = cfg_node->crc  % MAX_CFG_HASH;
 	if (key_exists(&MTP_CFG[index], cfg_node) == 0) {
-		//printf("added\n");
 		hlist_add_head(&cfg_node->hlist, &MTP_CFG[index]);
 	}
 
@@ -245,10 +222,10 @@ int read_config_item(config_t * cfg,MTP_CFG_ITEMS * item)
 	CFG_NODE * cfg_node = (CFG_NODE *)calloc(1,sizeof(CFG_NODE));
 
 	u32 index = 0;
-	//platform config
+	//config item
 	strcpy(cfg_node->key,item->name);
 	cfg_node->key_len = strlen(cfg_node->key);
-	cfg_node->crc = crc32(cfg_node->key,	cfg_node->key_len);
+	cfg_node->crc = crc32(cfg_node->key,cfg_node->key_len);
 	cfg_node->type = item->type;
 	if(item->type == CONFIG_TYPE_STRING)
 	{
@@ -257,7 +234,6 @@ int read_config_item(config_t * cfg,MTP_CFG_ITEMS * item)
 			printf("read %s string error\n",item->name);
 			return -1;
 		}
-		//printf("%s\n",cfg_node->v.s_value);
 	}
 	else if(item->type == CONFIG_TYPE_INT)
 	{
@@ -266,7 +242,6 @@ int read_config_item(config_t * cfg,MTP_CFG_ITEMS * item)
 			printf("read %s int error\n",item->name);
 			return -1;
 		}
-		//printf("%d\n",cfg_node->v.i_value);
 	}
 	else if(item->type == CONFIG_TYPE_BOOL)
 	{
@@ -275,26 +250,15 @@ int read_config_item(config_t * cfg,MTP_CFG_ITEMS * item)
 			printf("read %s bool error\n",item->name);
 			return -1;
 		}
-		//printf("%d\n",cfg_node->v.i_value);
-
 	}
 	else if(item->type == CONFIG_TYPE_GROUP)
 	{
-		//setting = config_lookup(cfg, "network.listen_ip");
-		//printf("found %s\n",setting->name);
 		setting = config_lookup(cfg, item->name);
 		int count = config_setting_length(setting);
-		//printf("platform count  %d\n",count);
 
 		for(i = 0; i < count; ++i)
 		{
-
 			config_setting_t *channel = config_setting_get_elem(setting, i);
-			//printf("-------\nchannel name :%s\n",channel->name);
-#if 0
-			config_setting_lookup_int(channel, "id", &(ch_entry->id));
-			config_setting_lookup_string(channel, "protocol", &(ch_entry->protocol));
-#endif
 			for(j = 0; j <ARRAY_SIZE(mtp_cfg_platform); j++)
 			{
 				if(mtp_cfg_platform[j].name[0])
@@ -341,7 +305,6 @@ int mtp_print_cfg( )
 	u32 i = 0;
 
 	for (i = 0; i < MAX_CFG_HASH; i++) {
-		//printf("%d:\n", i);
 		hlist_for_each_entry(node, hlistnode, &MTP_CFG[i],hlist) {
 			if(node->type == CONFIG_TYPE_STRING)
 				printf("[%s]=%s\n", node->key,node->v.s_value);
