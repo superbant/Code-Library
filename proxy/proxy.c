@@ -67,7 +67,6 @@ void init_sock_addr( struct sockaddr_in *sockaddr, u_int ip, u_short port)
 
 int Accept(int s, struct sockaddr *addr, socklen_t *addrlen)
 {
-    puts("Accept begin");
     int newfd = -1;
 
     if ((newfd = accept(s, addr, addrlen)) < 0) 
@@ -75,7 +74,6 @@ int Accept(int s, struct sockaddr *addr, socklen_t *addrlen)
         if (errno != EAGAIN)
             printf("Accept() error: %s", strerror(errno));
     }    
-    puts("Accept end");
 
     return newfd;
 }
@@ -83,7 +81,6 @@ int Accept(int s, struct sockaddr *addr, socklen_t *addrlen)
 
 int Connect(int sockfd, struct sockaddr *serv_addr, socklen_t addrlen, int tm_out)
 {
-    puts("Connect begin");
     int ret = 0;
     unsigned long ul = 1;
     int error = -1;
@@ -126,7 +123,6 @@ int Connect(int sockfd, struct sockaddr *serv_addr, socklen_t addrlen, int tm_ou
                 ntohs(((struct sockaddr_in*)serv_addr)->sin_port), strerror(errno));
         return -1;
     }
-    puts("Connect end");
     return 0;
 }
 
@@ -146,7 +142,6 @@ int Recv(int s, void * buf, int len, int flags)
 
 int Send(int s, const char * buf, int len, int flags)
 {
-    puts("Send begin");
     int ret;
     int nsend = 0;
     int total = len;
@@ -162,7 +157,6 @@ int Send(int s, const char * buf, int len, int flags)
         nsend += ret;
         len -= nsend;
     }
-    puts("Send end");
     return nsend;
 }
 
@@ -224,10 +218,14 @@ void * run_tcp_proxy(void *arg)
 
 	pproxy prun = (pproxy)arg;
 	if (prun == NULL)
-		goto __session_end;
+    {
+        fprintf(stderr, "%s:prun is null", __FUNCTION__);
+    }
 
 	if ((svr_sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0)
-		goto __session_end;
+    {
+        fprintf(stderr, "%s:create socket failed", __FUNCTION__); 
+    }
 
 	init_sock_addr(&svr_addr, prun->dip, prun->dport);
 
@@ -236,33 +234,32 @@ void * run_tcp_proxy(void *arg)
 	prun->svr_sock = svr_sock;
 	cli_sock = prun->cli_sock;
     
-	if (set_sock_opt(svr_sock, SOL_SOCKET, SO_REUSEADDR) < 0
-			|| set_sock_opt(cli_sock, SOL_SOCKET, SO_REUSEADDR) < 0)
-		goto __session_end;
-    printf("cli_sock: %d, svr_sock: %d\n", cli_sock, svr_sock);
+	set_sock_opt(svr_sock, SOL_SOCKET, SO_REUSEADDR);
+	set_sock_opt(cli_sock, SOL_SOCKET, SO_REUSEADDR);
+
     epfd = epoll_create(MAXEPOLLSIZE);
     if(epfd < 0)
     {
-        fprintf(stderr, "epool_create error:%s\n", strerror(errno)); 
+        fprintf(stderr, "%s:epool_create error:%s\n", strerror(errno), __FUNCTION__); 
     }
     if (insert_epoll_event(epfd, cli_sock, &curfds) < 0)
-        goto __session_end;
+    {
+        fprintf(stderr, "%s:insert_epoll_event error:%s\n", strerror(errno), __FUNCTION__); 
+    }
 
     if (insert_epoll_event(epfd, svr_sock, &curfds) < 0)
-        goto __session_end;
+    {
+        fprintf(stderr, "%s:insert_epoll_event error:%s\n", strerror(errno), __FUNCTION__);
+    }
 
 	for(;;)
     {
-        if ( curfds <= 0)
-        {
-            break; 
-        }
 	   
         nfds = epoll_wait(epfd, events, curfds, EPOLLWAITTIME);     
 
-        if (nfds <= 0)
+        if (nfds < 0)
         {   
-            continue ;
+            break;
         }   
         
         for (i = 0; i < nfds; ++i)
@@ -291,8 +288,6 @@ void * run_tcp_proxy(void *arg)
             }
         }
 	}
-
-__session_end:
 
 	close(cli_sock);
 	close(svr_sock);
