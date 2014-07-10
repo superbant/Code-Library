@@ -1,97 +1,103 @@
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Maintainer:
-"       yanwf
-" Version:
-"       1.0
-" Sections:
-"    -> Bundle template
-"    -> General
-"    -> Plugins_config
-"    -> User profile
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Bundle template 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set nocompatible              " be iMproved, required
-filetype off                  " required
-
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-" alternatively, pass a path where Vundle should install plugins
-"let path = '~/some/path/here'
-"call vundle#rc(path)
-
-" let Vundle manage Vundle, required
-Plugin 'gmarik/vundle'
-
-" The following are examples of different formats supported.
-" Keep Plugin commands between here and filetype plugin indent on.
-" scripts on GitHub repos
-"Plugin 'tpope/vim-fugitive'
-
-" The sparkup vim script is in a subdirectory of this repo called vim.
-" Pass the path to set the runtimepath properly.
-"Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-" scripts from http://vim-scripts.org/vim/scripts.html
-Plugin 'The-NERD-Commenter'
-Plugin 'indexer.tar.gz'
-Plugin 'vimprj'
-Plugin 'DfrankUtil'
-Plugin 'a.vim'
-Plugin 'SuperTab'
-Plugin 'OmniCppComplete'
-
-" scripts not on GitHub
-"Plugin 'git://git.wincent.com/command-t.git'
-" git repos on your local machine (i.e. when working on your own plugin)
-"Plugin 'file:///home/gmarik/path/to/plugin'
-" ...
-
-filetype plugin indent on     " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-" Brief help
-" :PluginList          - list configured plugins
-" :PluginInstall(!)    - install (update) plugins
-" :PluginSearch(!) foo - search (or refresh cache first) for foo
-" :PluginClean(!)      - confirm (or auto-approve) removal of unused plugins
-"
-" see :h vundle for more details or wiki for FAQ
-" NOTE: comments after Plugin commands are not allowed.
-" Put your stuff after this line
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+set tags+=/etc/vim/systags,../tags,./tags
+set path+=/usr/include,/usr/local/include
 
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
 let mapleader = ","
 let g:mapleader = ","
 
-" Fast saving
-nmap <leader>w :w!<cr>
-
 " :W sudo saves the file 
 " (useful for handling the permission-denied error)
 command W w !sudo tee % > /dev/null
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => User profile
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set tags+=/etc/vim/systags
-set path+=/usr/include,/usr/local/include
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Bundle template 
+
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
+
+" The following are examples of different formats supported.
+" Keep Plugin commands between vundle#begin/end.
+" plugin on GitHub repo
+"Plugin 'tpope/vim-fugitive'
+
+" plugin from http://vim-scripts.org/vim/scripts.html
+Bundle 'ctrlp.vim'
+Bundle 'AutoClose'
+
+"NerdTree的设置 并且相对行号显示
+Bundle 'The-NERD-tree'
+nmap <leader>nt :NERDTree<cr>:set rnu<cr>
+let NERDTreeShowBookmarks=1
+let NERDTreeShowFiles=1
+let NERDTreeShowHidden=1
+let NERDTreeIgnore=['\.$','\~$']
+let NERDTreeShowLineNumbers=1
+let NERDTreeWinPos=1
+
+"对NERD_commenter的设置
+Bundle 'The-NERD-Commenter'
+let NERDShutUp=1
+"支持单行和多行的选择，//格式
+map <c-h> ,c<space>
+
+Bundle 'taglist.vim'
+Bundle 'a.vim'
+" Git plugin not hosted on GitHub
+"Plugin 'git://git.wincent.com/command-t.git'
+
+" git repos on your local machine (i.e. when working on your own plugin)
+"Plugin 'file:///home/gmarik/path/to/plugin'
+
+" The sparkup vim script is in a subdirectory of this repo called vim.
+" Pass the path to set the runtimepath properly.
+"Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+
+" Avoid a name conflict with L9
+"Plugin 'user/L9', {'name': 'newL9'}
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+
+" Brief help
+" :PluginList          - list configured plugins
+" :PluginInstall(!)    - install (update) plugins
+" :PluginSearch(!) foo - search (or refresh cache first) for foo
+" :PluginClean(!)      - confirm (or auto-approve) removal of unused plugins
+
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"设置粘贴模式
-set paste
+"
 
-" Sets how many lines of history VIM has to remember
-set history=700
+set hidden
+
+" Ignore compiled files
+set wildignore=*.o,*~,*.pyc
+if has("win16") || has("win32")
+    set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
+else
+    set wildignore+=.git\*,.hg\*,.svn\*
+endif
 
 " Set to auto read when a file is changed from the outside
 set autoread
@@ -99,26 +105,10 @@ set autoread
 "显示行号
 set number
 
-"行内替换
-set gdefault
-
-"光标移动到buffer的顶部和底部时保持3行距离
-set scrolloff=3
-
-" Set 7 lines to the cursor - when moving vertically using j/k
-set so=7
-
-" Turn on the WiLd menu
-set wildmenu
-
-" Ignore compiled files
-set wildignore=*.o,*~,*.pyc
-
-if has("win16") || has("win32")
-    set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
-else
-    set wildignore+=.git\*,.hg\*,.svn\*
-endif
+"相对行号 要想相对行号起作用要放在显示行号后面
+set relativenumber
+"无限undo
+set undofile
 
 "Always show current position
 set ruler
@@ -134,7 +124,7 @@ set whichwrap+=b,s,<,>,[,],h,l
 set iskeyword+=_,$,@,%,#,-
 
 " Ignore case when searching
-"set ignorecase
+set ignorecase
 
 " When searching try to be smart about cases 
 set smartcase
@@ -153,8 +143,6 @@ set magic
 
 " Show matching brackets when text indicator is over them
 set showmatch
-" How many tenths of a second to blink when matching brackets
-set mat=2
 
 "匹配括号的规则，增加针对html的<>
 set matchpairs=(:),{:},[:],<:>
@@ -162,8 +150,6 @@ set matchpairs=(:),{:},[:],<:>
 " No annoying sound on errors
 set noerrorbells
 set novisualbell
-set t_vb=
-set tm=500
 
 " Add a bit extra margin to the left
 set foldcolumn=1
@@ -171,25 +157,42 @@ set foldcolumn=1
 "在处理未保存或只读文件的时候，弹出确认
 set confirm
 
+"设置光标高亮显示
+"set cursorline
+set cursorcolumn
+
+" Always show the status line
+set laststatus=2
+
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 " Enable syntax highlighting
 syntax enable 
 
-colorscheme desert
-"colorscheme evening
-"set background=dark
+try
+    colorscheme desert
+catch
+endtry
 
-" Set utf8 as standard encoding and zh_CN.UTF-8 as the standard language
+" Set extra options when running in GUI mode
+if has("gui_running")
+    set guioptions-=T
+    set guioptions-=e
+    set t_Co=256
+    set guitablabel=%M\ %t
+endif
+
+" Set utf8 as standard encoding and en_US as the standard language
 set encoding=utf-8     "vim 内部使用的编码方式
 set termencoding=utf-8 "用于屏幕显示
 set langmenu=zh_CN.UTF-8
 set helplang=cn
-set fileencodings=utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
-" Use Unix as the standard file type
-set ffs=unix,dos,mac
+set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
+
+"新建文件编码
+set fenc=utf-8
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Files, backups and undo
@@ -198,19 +201,19 @@ set ffs=unix,dos,mac
 set nobackup
 set nowb
 set noswapfile
+
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Text, tab and indent related
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Use spaces instead of tabs
 set expandtab
 
-" Be smart when using tabs ;)
-set smarttab
-
 " 1 tab == 4 spaces
 set shiftwidth=4
 set tabstop=4
 set softtabstop=4
+
 
 " Linebreak on 500 characters
 set lbr
@@ -218,23 +221,22 @@ set tw=500
 
 set ai "Auto indent
 set si "Smart indent
+"自动换行
 set wrap "Wrap lines
 set cindent "c indent
+set autoindent
 
 "字符间插入的像素数目
 set linespace=0
 
+"彩色显示第85行
+"set colorcolumn=85
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Moving around, tabs, windows and buffers
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Treat long lines as break lines (useful when moving around in them)
 map j gj
 map k gk
-
-" Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
-map <space> /
-map <c-space> ?
 
 " Disable highlight when <leader><cr> is pressed
 map <silent> <leader><cr> :noh<cr>
@@ -244,9 +246,6 @@ map <C-j> <C-W>j
 map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
-
-" Close the current buffer
-map <leader>bd :Bclose<cr>
 
 " Close all the buffers
 map <leader>ba :1,1000 bd!<cr>
@@ -265,79 +264,54 @@ map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
 " Switch CWD to the directory of the open buffer
 map <leader>cd :cd %:p:h<cr>:pwd<cr>
 
+" Specify the behavior when switching between buffers 
+try
+  set switchbuf=useopen,usetab,newtab
+  set stal=2
+catch
+endtry
+
 " Return to last edit position when opening files (You want this!)
 autocmd BufReadPost *
      \ if line("'\"") > 0 && line("'\"") <= line("$") |
      \   exe "normal! g`\"" |
      \ endif
+
 " Remember info about open buffers on close
 set viminfo^=%
 
-""""""""""""""""""""""""""""""
-" => Status line
-""""""""""""""""""""""""""""""
-" Always show the status line
-set laststatus=2
 
-" Format the status line
-set statusline=%F%m%r%h%w\[FORMAT=%{&ff}]\[TYPE=%Y]\[POS=%l,%v][%p%%]\%{strftime(\"%d/%m/%y\-\%H:%M\")}
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Spell checking
+" Pressing ,ss will toggle and untoggle spell checking
+map <leader>ss :setlocal spell!<cr>
+
+" Shortcuts using <leader>
+map <leader>sn ]s
+map <leader>sp [s
+map <leader>sa zg
+map <leader>s? z=
+
+" Remap VIM 0 to first non-blank character
+map 0 ^
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Plugins_config 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Misc
+" Remove the Windows ^M - when the encodings gets messed up
+noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" taglist设置
-let Tlist_Show_One_File=1    "只显示当前文件的tags
-let Tlist_WinWidth=40        "设置taglist宽度
-let Tlist_Exit_OnlyWindow=1  "tagList窗口是最后一个窗口，则退出Vim
-let Tlist_Use_Right_Window=1 "在Vim窗口右侧显示taglist窗口
-let Tlist_Auto_Open=0       "启动vim自动打开taglist
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Quickly open a buffer for scribble
+map <leader>q :e ~/buffer<cr>
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" netrw插件设置
-let g:netrw_winsize = 30
-nmap <silent> <leader>fe :Sexplore!<cr>
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Quickly open a markdown buffer for scribble
+map <leader>x :e ~/buffer.md<cr>
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" a.vim map 
-nnoremap <silent> <F12> :A<CR>
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Toggle paste mode on and off
+map <leader>pp :setlocal paste!<cr>
 
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"new-omni-completion 内置"
-set completeopt=longest,menu      " I really HATE the preview window!!!
-
-"OmniCppComplete 智能补全  :help omnicppcomplete
-let OmniCpp_DefaultNamespaces = ["_GLIBCXX_STD"]
-let OmniCpp_NameSpaceSearch=1     " 0: namespaces disabled
-                                  " 1: search namespaces in the current buffer [default]
-                                  " 2: search namespaces in the current buffer and in included files
-let OmniCpp_GlobalScopeSearch=1   " 0: disabled 1:enabled
-let OmniCpp_ShowAccess=1          " 1: show access
-let OmniCpp_ShowPrototypeInAbbr=1 " 1: display prototype in abbreviation
-let OmniCpp_MayCompleteArrow=1    " autocomplete after ->
-let OmniCpp_MayCompleteDot=1      " autocomplete after .
-let OmniCpp_MayCompleteScope=1    " autocomplete after ::
-
-"autocmd Filetype c set omnifunc=ccomplete#Complete
-"autocmd Filetype cpp set omnifunc=cppcomplete#Complete
-"autocmd FileType php set omnifunc=phpcomplete#CompletePHP
-"autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-"autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-"autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 使用 minibufexpl.vim 插件管理 buffer，设置允许光标在任意位置时，通过 CTRL-TAB 遍历 buffer
-let g:miniBufExplMapCTabSwitchBufs=1
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-"vim在插入模式下支持13种补全方式(:help ins-completion),Supertab插件
-let g:SuperTabRetainCOmpletionType=2    " 2: remember last autocomplete type, unless I use ESC to exit insert mode
-let g:SuperTabDefaultCompletionType="<C-X><C-O>"
+"terminal下面的背景问题
+let g:solarized_termtrans=1
+let g:solarized_termcolors=256
+let g:solarized_contrast="high"
+let g:solarized_visibility="high"
