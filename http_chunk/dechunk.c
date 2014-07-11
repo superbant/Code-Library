@@ -2,9 +2,6 @@
  *  dechunk.c
  *  http_chunk_demo
  *
- *  Created by I MAC on 11-9-7.
- *  Copyright 2011 __MyCompanyName__. All rights reserved.
- *
  */
 
 #include "dechunk.h"
