@@ -3,7 +3,7 @@
 " => General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-set tags+=/etc/vim/systags,../tags,./tags
+set tags+=/home/dilly/.vim/systags,../tags,./tags
 set path+=/usr/include,/usr/local/include
 
 " With a map leader it's possible to do extra key combinations
@@ -58,6 +58,14 @@ map <c-h> ,c<space>
 
 Bundle 'taglist.vim'
 Bundle 'a.vim'
+Bundle 'c.vim'
+"new-omni-completion 内置插件"
+set completeopt=longest,menu
+"SuperTab"
+Bundle 'SuperTab'
+let g:SuperTabRetainCompletionType=2
+let g:SuperTabDefaultCompletionType="<C-X><C-O>"
+
 " Git plugin not hosted on GitHub
 "Plugin 'git://git.wincent.com/command-t.git'
 
@@ -88,16 +96,24 @@ filetype plugin indent on    " required
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
 "
-
+"允许未保存切换buffer 隐藏buff非关闭它
 set hidden
 
-" Ignore compiled files
+" 可以在buffer的任何地方使用鼠标（类似office中在工作区双击鼠标定位）
+ set mouse=a
+ set selection=exclusive
+ set selectmode=mouse,key 
+
+"Ignore compiled files
 set wildignore=*.o,*~,*.pyc
 if has("win16") || has("win32")
     set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
 else
     set wildignore+=.git\*,.hg\*,.svn\*
 endif
+
+"复制之前的缩进
+set copyindent
 
 " Set to auto read when a file is changed from the outside
 set autoread
@@ -106,9 +122,10 @@ set autoread
 set number
 
 "相对行号 要想相对行号起作用要放在显示行号后面
-set relativenumber
+"set relativenumber
+
 "无限undo
-"set undofile
+""set undofile
 
 "Always show current position
 set ruler
@@ -158,13 +175,15 @@ set foldcolumn=1
 set confirm
 
 "设置光标高亮显示
-"set cursorline
-set cursorcolumn
+""set cursorline
+"set cursorcolumn
+" 光标移动到buffer的顶部和底部时保持3行距离
+ set scrolloff=3 
 
 " Always show the status line
 set laststatus=2
-"set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
-set statusline=%2*%n%m%r%h%w%*\ %F\ %1*[FORMAT=%2*%{&ff}:%{&fenc!=''?&fenc:&enc}%1*]\ [TYPE=%2*%Y%1*]\ [COL=%2*%03v%1*]\ [ROW=%2*%03l%1*/%3*%L(%p%%)%1*]\
+set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
+""set statusline=%2*%n%m%r%h%w%*\ %F\ %1*[FORMAT=%2*%{&ff}:%{&fenc!=''?&fenc:&enc}%1*]\ [TYPE=%2*%Y%1*]\ [COL=%2*%03v%1*]\ [ROW=%2*%03l%1*/%3*%L(%p%%)%1*]\
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -176,14 +195,6 @@ try
     colorscheme desert
 catch
 endtry
-
-" Set extra options when running in GUI mode
-if has("gui_running")
-    set guioptions-=T
-    set guioptions-=e
-    set t_Co=256
-    set guitablabel=%M\ %t
-endif
 
 " Set utf8 as standard encoding and en_US as the standard language
 set encoding=utf-8     "vim 内部使用的编码方式
@@ -210,29 +221,25 @@ set noswapfile
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Use spaces instead of tabs
 set expandtab
+set tabstop=4
 
 " 1 tab == 4 spaces
-set shiftwidth=4
-set tabstop=4
 set softtabstop=4
+set shiftwidth=4
 
 
 " Linebreak on 500 characters
 set lbr
 set tw=500
 
-set ai "Auto indent
-set si "Smart indent
 "自动换行
 set wrap "Wrap lines
 set cindent "c indent
 set autoindent
+set si "Smart indent
 
 "字符间插入的像素数目
 set linespace=0
-
-"彩色显示第85行
-"set colorcolumn=85
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Moving around, tabs, windows and buffers
@@ -303,17 +310,5 @@ map 0 ^
 " Remove the Windows ^M - when the encodings gets messed up
 noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
 
-" Quickly open a buffer for scribble
-map <leader>q :e ~/buffer<cr>
-
-" Quickly open a markdown buffer for scribble
-map <leader>x :e ~/buffer.md<cr>
-
 " Toggle paste mode on and off
 map <leader>pp :setlocal paste!<cr>
-
-"terminal下面的背景问题
-let g:solarized_termtrans=1
-let g:solarized_termcolors=256
-let g:solarized_contrast="high"
-let g:solarized_visibility="high"
