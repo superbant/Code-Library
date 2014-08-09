@@ -4,8 +4,8 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 ""ctags -I __THROW -I __attribute_pure__ -I __nonnull -I __attribute__ --file-scope=yes --langmap=c:+.h --languages=c,c++ --links=yes --c-kinds=+p --c++-kinds=+p --fields=+iaS --extra=+q  -f ~/.vim/systags /usr/include/* /usr/include/sys/* /usr/include/bits/*  /usr/include/netinet/* /usr/include/arpa/* /usr/include/mysql/* /usr/include/x86_64-linux-gnu/bits/* /usr/include/x86_64-linux-gnu/sys/*
 
-set tags+=/home/dilly/.vim/systags,../tags,./tags
-set path+=/usr/include,/usr/local/include
+set tags+=~/.vim/systags,../tags,./tags
+set path+=/usr/include,/usr/local/include,/usr/include/x86_64-linux-gnu/
 
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
@@ -65,7 +65,7 @@ set completeopt=longest,menu
 "SuperTab"
 Bundle 'SuperTab'
 let g:SuperTabRetainCompletionType=2
-let g:SuperTabDefaultCompletionType="<C-X><C-O>"
+""let g:SuperTabDefaultCompletionType="<C-X><C-O>"
 
 " Git plugin not hosted on GitHub
 "Plugin 'git://git.wincent.com/command-t.git'
@@ -101,9 +101,9 @@ filetype plugin indent on    " required
 set hidden
 
 " 可以在buffer的任何地方使用鼠标（类似office中在工作区双击鼠标定位）
- set mouse=a
- set selection=exclusive
- set selectmode=mouse,key 
+ ""set mouse=a
+ ""set selection=exclusive
+ ""set selectmode=mouse,key 
 
 "Ignore compiled files
 set wildignore=*.o,*~,*.pyc
