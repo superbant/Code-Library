@@ -59,6 +59,7 @@ map <c-h> ,c<space>
 
 Bundle 'taglist.vim'
 Bundle 'a.vim'
+ "C语言快捷编辑工具"
 Bundle 'c.vim'
 "new-omni-completion 内置插件"
 set completeopt=longest,menu
