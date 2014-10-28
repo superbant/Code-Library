@@ -1,9 +1,17 @@
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Global 
+" => Bundle  
+" => VIM user interface
+" => Colors and Fonts
+" => Text, tab and indent related
+" => Moving around, tabs, windows and buffers
+" => Misc
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => General
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""ctags -I __THROW -I __attribute_pure__ -I __nonnull -I __attribute__ --file-scope=yes --langmap=c:+.h --languages=c,c++ --links=yes --c-kinds=+p --c++-kinds=+p --fields=+iaS --extra=+q  -f ~/.vim/systags /usr/include/* /usr/include/sys/* /usr/include/bits/*  /usr/include/netinet/* /usr/include/arpa/* /usr/include/mysql/* /usr/include/x86_64-linux-gnu/bits/* /usr/include/x86_64-linux-gnu/sys/*
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Global 
+"ctags -I __THROW -I __attribute_pure__ -I __nonnull -I __attribute__ --file-scope=yes --langmap=c:+.h --languages=c,c++ --links=yes --c-kinds=+p --c++-kinds=+p --fields=+iaS --extra=+q  -f ~/.vim/systags /usr/include/* /usr/include/sys/* /usr/include/bits/*  /usr/include/netinet/* /usr/include/arpa/* /usr/include/mysql/* /usr/include/x86_64-linux-gnu/bits/* /usr/include/x86_64-linux-gnu/sys/*
+"map <F8> :!ctags -R –c++-kinds=+p –fields=+iaS –extra=+q .<CR>
 set tags+=~/.vim/systags,../tags,./tags
 set path+=/usr/include,/usr/local/include,/usr/include/x86_64-linux-gnu/
 
@@ -16,10 +24,17 @@ let g:mapleader = ","
 " (useful for handling the permission-denied error)
 command W w !sudo tee % > /dev/null
 
+"Ignore compiled files
+set wildignore=*.o,*~,*.pyc
+if has("win16") || has("win32")
+    set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
+else
+    set wildignore+=.git\*,.hg\*,.svn\*
+endif
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Bundle template 
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Bundle  
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
@@ -38,11 +53,14 @@ Plugin 'gmarik/Vundle.vim'
 "Plugin 'tpope/vim-fugitive'
 
 " plugin from http://vim-scripts.org/vim/scripts.html
-Bundle 'ctrlp.vim'
-Bundle 'AutoClose'
+"Plugin 'L9'
 
-"NerdTree的设置 并且相对行号显示
-Bundle 'The-NERD-tree'
+"Tabular :[range] Tabluarize /{char1}参照char1对齐文本
+Plugin 'Tabular'
+"a.vim  :A 切换.c/.h
+Plugin 'a.vim'
+"NERDTree :NERDTree  目录列表
+Plugin 'The-NERD-tree'
 nmap <leader>nt :NERDTree<cr>:set rnu<cr>
 let NERDTreeShowBookmarks=1
 let NERDTreeShowFiles=1
@@ -51,22 +69,18 @@ let NERDTreeIgnore=['\.$','\~$']
 let NERDTreeShowLineNumbers=1
 let NERDTreeWinPos=1
 
-"对NERD_commenter的设置
+"NERD_commenter 注释代码
 Bundle 'The-NERD-Commenter'
 let NERDShutUp=1
 "支持单行和多行的选择，//格式
 map <c-h> ,c<space>
 
-Bundle 'taglist.vim'
-Bundle 'a.vim'
- "C语言快捷编辑工具"
+
+"taglist :Tlist  函数列表
+Plugin 'taglist.vim'
+
+"C语言快捷编辑工具"
 Bundle 'c.vim'
-"new-omni-completion 内置插件"
-set completeopt=longest,menu
-"SuperTab"
-Bundle 'SuperTab'
-let g:SuperTabRetainCompletionType=2
-""let g:SuperTabDefaultCompletionType="<C-X><C-O>"
 
 " Git plugin not hosted on GitHub
 "Plugin 'git://git.wincent.com/command-t.git'
@@ -81,38 +95,32 @@ let g:SuperTabRetainCompletionType=2
 " Avoid a name conflict with L9
 "Plugin 'user/L9', {'name': 'newL9'}
 
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
-
+"
 " Brief help
-" :PluginList          - list configured plugins
-" :PluginInstall(!)    - install (update) plugins
-" :PluginSearch(!) foo - search (or refresh cache first) for foo
-" :PluginClean(!)      - confirm (or auto-approve) removal of unused plugins
-
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
-"
-"允许未保存切换buffer 隐藏buff非关闭它
+"允许未保存切换buffer 隐藏buff
 set hidden
 
-" 可以在buffer的任何地方使用鼠标（类似office中在工作区双击鼠标定位）
- ""set mouse=a
- ""set selection=exclusive
- ""set selectmode=mouse,key 
-
-"Ignore compiled files
-set wildignore=*.o,*~,*.pyc
-if has("win16") || has("win32")
-    set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
-else
-    set wildignore+=.git\*,.hg\*,.svn\*
-endif
+"可以在buffer的任何地方使用鼠标（类似office中在工作区双击鼠标定位）
+"set mouse=a
+"set selection=exclusive
+"set selectmode=mouse,key 
 
 "复制之前的缩进
 set copyindent
@@ -127,12 +135,12 @@ set number
 "set relativenumber
 
 "无限undo
-""set undofile
+"set undofile
 
 "Always show current position
 set ruler
 
-" Height of the command bar
+"Height of the command bar
 set cmdheight=2
 
 " Configure backspace so it acts as it should act
@@ -177,18 +185,18 @@ set foldcolumn=1
 set confirm
 
 "设置光标高亮显示
-""set cursorline
+"set cursorline
 "set cursorcolumn
-" 光标移动到buffer的顶部和底部时保持3行距离
- set scrolloff=3 
+"光标移动到buffer的顶部和底部时保持3行距离
+set scrolloff=3 
 
 " Always show the status line
 set laststatus=2
-set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
-""set statusline=%2*%n%m%r%h%w%*\ %F\ %1*[FORMAT=%2*%{&ff}:%{&fenc!=''?&fenc:&enc}%1*]\ [TYPE=%2*%Y%1*]\ [COL=%2*%03v%1*]\ [ROW=%2*%03l%1*/%3*%L(%p%%)%1*]\
+set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}:%{&fenc!=''?&fenc:&enc}]\ [TYPE=%Y]\ [ROW=%03l/%L(%p%%)]\ [COL=%03v]
+"set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}:%{&fenc!=''?&fenc:&enc}]\ [TYPE=%Y]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
+"set statusline=%2*%n%m%r%h%w%*\ %F\ %1*[FORMAT=%2*%{&ff}:%{&fenc!=''?&fenc:&enc}%1*]\ [TYPE=%2*%Y%1*]\ [COL=%2*%03v%1*]\ [ROW=%2*%03l%1*/%3*%L(%p%%)%1*]\
 
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
 " Enable syntax highlighting
 syntax enable 
@@ -208,19 +216,8 @@ set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
 "新建文件编码
 set fenc=utf-8
 
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Files, backups and undo
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Turn backup off, since most stuff is in SVN, git et.c anyway...
-set nobackup
-set nowb
-set noswapfile
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Text, tab and indent related
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Use spaces instead of tabs
 set expandtab
 set tabstop=4
@@ -243,7 +240,7 @@ set si "Smart indent
 "字符间插入的像素数目
 set linespace=0
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Moving around, tabs, windows and buffers
 " Treat long lines as break lines (useful when moving around in them)
 map j gj
@@ -258,15 +255,20 @@ map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 
-" Close all the buffers
-map <leader>ba :1,1000 bd!<cr>
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Misc
 
-" Useful mappings for managing tabs
-map <leader>tn :tabnew<cr>
-map <leader>to :tabonly<cr>
-map <leader>tc :tabclose<cr>
-map <leader>tm :tabmove 
-map <leader>t<leader> :tabnext 
+"new-omni-completion
+set completeopt=longest,menu
+
+"代码折叠
+set foldenable
+set foldmethod=manual
+
+" Turn backup off, since most stuff is in SVN, git et.c anyway...
+set nobackup
+set nowb
+set noswapfile
 
 " Opens a new tab with the current buffer's path
 " Super useful when editing files in the same directory
@@ -274,13 +276,6 @@ map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
 
 " Switch CWD to the directory of the open buffer
 map <leader>cd :cd %:p:h<cr>:pwd<cr>
-
-" Specify the behavior when switching between buffers 
-try
-  set switchbuf=useopen,usetab,newtab
-  set stal=2
-catch
-endtry
 
 " Return to last edit position when opening files (You want this!)
 autocmd BufReadPost *
@@ -291,26 +286,9 @@ autocmd BufReadPost *
 " Remember info about open buffers on close
 set viminfo^=%
 
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Spell checking
-" Pressing ,ss will toggle and untoggle spell checking
-map <leader>ss :setlocal spell!<cr>
-
-" Shortcuts using <leader>
-map <leader>sn ]s
-map <leader>sp [s
-map <leader>sa zg
-map <leader>s? z=
-
-" Remap VIM 0 to first non-blank character
-map 0 ^
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Misc
 " Remove the Windows ^M - when the encodings gets messed up
 noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
 
 " Toggle paste mode on and off
 map <leader>pp :setlocal paste!<cr>
+
