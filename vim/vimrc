@@ -111,9 +111,9 @@ let g:ycm_complete_in_comments = 1
 "Tabular :[range] Tabluarize /{char1}参照char1对齐文本
 "for code alignment
 Plugin 'Tabular'
-" \bb 按=号对齐代码 
+" <leader>bb 按=号对齐代码 
 nmap <leader>bb :Tab /=<CR>
-" \bn 自定义对齐    
+" <leader>bn 自定义对齐    
 nmap <leader>bn :Tab /
 
 
