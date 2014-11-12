@@ -1,0 +1,193 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+ANSI_BLACK	google-authenticator.c	172;"	d	file:
+ANSI_BLACKONGREY	google-authenticator.c	170;"	d	file:
+ANSI_RESET	google-authenticator.c	169;"	d	file:
+ANSI_WHITE	google-authenticator.c	171;"	d	file:
+BITS_PER_BASE32_CHAR	google-authenticator.c	44;"	d	file:
+BYTES_PER_SCRATCHCODE	google-authenticator.c	43;"	d	file:
+BYTE_ORDER	sha1.c	51;"	d	file:
+BYTE_ORDER	sha1.c	53;"	d	file:
+CC	Makefile	/^  CC := gcc$/;"	m
+COMBINED_PASSWORD	pam_google_authenticator_unittest.c	/^static enum { TWO_PROMPTS, COMBINED_PASSWORD, COMBINED_PROMPT } conv_mode;$/;"	e	enum:__anon4	file:
+COMBINED_PROMPT	pam_google_authenticator_unittest.c	/^static enum { TWO_PROMPTS, COMBINED_PASSWORD, COMBINED_PROMPT } conv_mode;$/;"	e	enum:__anon4	file:
+CONST1	sha1.c	70;"	d	file:
+CONST2	sha1.c	71;"	d	file:
+CONST3	sha1.c	72;"	d	file:
+CONST4	sha1.c	73;"	d	file:
+DEF_CFLAGS	Makefile	/^DEF_CFLAGS := $(shell [ `uname` = SunOS ] &&                                  \\$/;"	m
+DEF_LDFLAGS	Makefile	/^DEF_LDFLAGS := $(shell [ `uname` = SunOS ] && echo ' -mimpure-text') $(LDFLAGS)$/;"	m
+FA	sha1.c	87;"	d	file:
+FB	sha1.c	90;"	d	file:
+FC	sha1.c	93;"	d	file:
+FD	sha1.c	96;"	d	file:
+FE	sha1.c	99;"	d	file:
+FG	sha1.c	82;"	d	file:
+FT	sha1.c	102;"	d	file:
+HAS_SETFSUID	pam_google_authenticator.c	37;"	d	file:
+I	totp.html	/^      function I(x){var t=L(a,5)+f+e+k+E[x];e=d;d=c;c=L(b,30);b=a;a=t;}$/;"	f
+L	totp.html	/^    function L(x,b){return x<<b|x>>>32-b;}$/;"	f
+LDL_LDFLAGS	Makefile	/^LDL_LDFLAGS := $(shell $(CC) -shared -ldl -xc -o \/dev\/null \/dev\/null          \\$/;"	m
+LOG_AUTHPRIV	pam_google_authenticator.c	45;"	d	file:
+MODULE_NAME	pam_google_authenticator.c	57;"	d	file:
+NULLERR	pam_google_authenticator.c	/^  enum { NULLERR=0, NULLOK, SECRETNOTFOUND } nullok;$/;"	e	enum:Params::__anon2	file:
+NULLOK	pam_google_authenticator.c	/^  enum { NULLERR=0, NULLOK, SECRETNOTFOUND } nullok;$/;"	e	enum:Params::__anon2	file:
+PAM_BAD_ITEM	demo.c	36;"	d	file:
+PAM_BAD_ITEM	pam_google_authenticator_unittest.c	38;"	d	file:
+PAM_CONST	demo.c	79;"	d	file:
+PAM_CONST	demo.c	81;"	d	file:
+PAM_CONST	pam_google_authenticator_unittest.c	67;"	d	file:
+PAM_CONST	pam_google_authenticator_unittest.c	69;"	d	file:
+PAM_EXTERN	pam_google_authenticator.c	41;"	d	file:
+PAM_SM_AUTH	pam_google_authenticator.c	48;"	d	file:
+PAM_SM_SESSION	pam_google_authenticator.c	49;"	d	file:
+PROMPT	pam_google_authenticator.c	/^  enum { PROMPT = 0, TRY_FIRST_PASS, USE_FIRST_PASS } pass_mode;$/;"	e	enum:Params::__anon3	file:
+Params	pam_google_authenticator.c	/^typedef struct Params {$/;"	s	file:
+Params	pam_google_authenticator.c	/^} Params;$/;"	t	typeref:struct:Params	file:
+QR_ANSI	google-authenticator.c	/^static enum { QR_UNSET=0, QR_NONE, QR_ANSI, QR_UTF8 } qr_mode = QR_UNSET;$/;"	e	enum:__anon1	file:
+QR_NONE	google-authenticator.c	/^static enum { QR_UNSET=0, QR_NONE, QR_ANSI, QR_UTF8 } qr_mode = QR_UNSET;$/;"	e	enum:__anon1	file:
+QR_UNSET	google-authenticator.c	/^static enum { QR_UNSET=0, QR_NONE, QR_ANSI, QR_UTF8 } qr_mode = QR_UNSET;$/;"	e	enum:__anon1	file:
+QR_UTF8	google-authenticator.c	/^static enum { QR_UNSET=0, QR_NONE, QR_ANSI, QR_UTF8 } qr_mode = QR_UNSET;$/;"	e	enum:__anon1	file:
+R32	sha1.c	79;"	d	file:
+SCRATCHCODES	google-authenticator.c	41;"	d	file:
+SCRATCHCODE_LENGTH	google-authenticator.c	42;"	d	file:
+SECRET	google-authenticator.c	38;"	d	file:
+SECRET	pam_google_authenticator.c	58;"	d	file:
+SECRETNOTFOUND	pam_google_authenticator.c	/^  enum { NULLERR=0, NULLOK, SECRETNOTFOUND } nullok;$/;"	e	enum:Params::__anon2	file:
+SECRET_BITS	google-authenticator.c	39;"	d	file:
+SHA1_BLOCKSIZE	sha1.h	23;"	d
+SHA1_DIGEST_LENGTH	sha1.h	24;"	d
+SHA1_H__	sha1.h	19;"	d
+SHA1_INFO	sha1.h	/^} SHA1_INFO;$/;"	t	typeref:struct:__anon5
+SWAP_DONE	sha1.c	115;"	d	file:
+SWAP_DONE	sha1.c	118;"	d	file:
+SWAP_DONE	sha1.c	130;"	d	file:
+SWAP_DONE	sha1.c	139;"	d	file:
+SWAP_DONE	sha1.c	152;"	d	file:
+SWAP_DONE	sha1.c	162;"	d	file:
+T32	sha1.c	76;"	d	file:
+TRUNC32	sha1.c	60;"	d	file:
+TRY_FIRST_PASS	pam_google_authenticator.c	/^  enum { PROMPT = 0, TRY_FIRST_PASS, USE_FIRST_PASS } pass_mode;$/;"	e	enum:Params::__anon3	file:
+TWO_PROMPTS	pam_google_authenticator_unittest.c	/^static enum { TWO_PROMPTS, COMBINED_PASSWORD, COMBINED_PROMPT } conv_mode;$/;"	e	enum:__anon4	file:
+USE_FIRST_PASS	pam_google_authenticator.c	/^  enum { PROMPT = 0, TRY_FIRST_PASS, USE_FIRST_PASS } pass_mode;$/;"	e	enum:Params::__anon3	file:
+UTF8_BOTH	google-authenticator.c	173;"	d	file:
+UTF8_BOTTOMHALF	google-authenticator.c	175;"	d	file:
+UTF8_TOPHALF	google-authenticator.c	174;"	d	file:
+VERIFICATION_CODE_MODULUS	google-authenticator.c	40;"	d	file:
+VERSION	Makefile	/^VERSION := 1.0$/;"	m
+_BASE32_H_	base32.h	29;"	d
+_BSD_SOURCE	sha1.c	43;"	d	file:
+_GNU_SOURCE	google-authenticator.c	19;"	d	file:
+_GNU_SOURCE	pam_google_authenticator.c	18;"	d	file:
+_HMAC_H_	hmac.h	19;"	d
+_pam_listfile_modstruct	pam_google_authenticator.c	/^struct pam_module _pam_listfile_modstruct = {$/;"	v	typeref:struct:pam_module
+addOption	google-authenticator.c	/^static char *addOption(char *buf, size_t nbuf, const char *option) {$/;"	f	file:
+base32_decode	base32.c	/^int base32_decode(const uint8_t *encoded, uint8_t *result, int bufSize) {$/;"	f
+base32_encode	base32.c	/^int base32_encode(const uint8_t *data, int length, uint8_t *result,$/;"	f
+check_counterbased_code	pam_google_authenticator.c	/^static int check_counterbased_code(pam_handle_t *pamh,$/;"	f	file:
+check_scratch_codes	pam_google_authenticator.c	/^static int check_scratch_codes(pam_handle_t *pamh, const char *secret_filename,$/;"	f	file:
+check_time_skew	pam_google_authenticator.c	/^static int check_time_skew(pam_handle_t *pamh, const char *secret_filename,$/;"	f	file:
+check_timebased_code	pam_google_authenticator.c	/^static int check_timebased_code(pam_handle_t *pamh, const char*secret_filename,$/;"	f	file:
+comparator	pam_google_authenticator.c	/^static int comparator(const void *a, const void *b) {$/;"	f	file:
+compute_code	pam_google_authenticator.c	/^int compute_code(const uint8_t *secret, int secretLen, unsigned long value) {$/;"	f	file:
+cont	demo.c	/^static void cont(int signo) {$/;"	f	file:
+conv_mode	pam_google_authenticator_unittest.c	/^static enum { TWO_PROMPTS, COMBINED_PASSWORD, COMBINED_PROMPT } conv_mode;$/;"	v	typeref:enum:__anon4	file:
+conversation	demo.c	/^static int conversation(int num_msg, const struct pam_message **msg,$/;"	f	file:
+conversation	pam_google_authenticator_unittest.c	/^static int conversation(int num_msg, const struct pam_message **msg,$/;"	f	file:
+converse	pam_google_authenticator.c	/^static int converse(pam_handle_t *pamh, int nargs,$/;"	f	file:
+count_hi	sha1.h	/^  uint32_t count_lo, count_hi;$/;"	m	struct:__anon5
+count_lo	sha1.h	/^  uint32_t count_lo, count_hi;$/;"	m	struct:__anon5
+current_time	pam_google_authenticator.c	/^static time_t current_time;$/;"	v	file:
+data	sha1.h	/^  uint8_t  data[SHA1_BLOCKSIZE];$/;"	m	struct:__anon5
+digest	sha1.h	/^  uint32_t digest[8];$/;"	m	struct:__anon5
+displayQRCode	google-authenticator.c	/^static void displayQRCode(const char *secret, const char *label,$/;"	f	file:
+drop_privileges	pam_google_authenticator.c	/^static int drop_privileges(pam_handle_t *pamh, const char *username, int uid,$/;"	f	file:
+echocode	pam_google_authenticator.c	/^  int        echocode;$/;"	m	struct:Params	file:
+error_msg	pam_google_authenticator.c	/^static char error_msg[128];$/;"	v	file:
+f1	sha1.c	64;"	d	file:
+f2	sha1.c	65;"	d	file:
+f3	sha1.c	66;"	d	file:
+f4	sha1.c	67;"	d	file:
+fixed_uid	pam_google_authenticator.c	/^  int        fixed_uid;$/;"	m	struct:Params	file:
+forward_pass	pam_google_authenticator.c	/^  int        forward_pass;$/;"	m	struct:Params	file:
+generateCode	google-authenticator.c	/^static int generateCode(const char *key, unsigned long tm) {$/;"	f	file:
+getURL	google-authenticator.c	/^static const char *getURL(const char *secret, const char *label,$/;"	f	file:
+getUserName	google-authenticator.c	/^static const char *getUserName(uid_t uid) {$/;"	f	file:
+get_cfg_value	pam_google_authenticator.c	/^static char *get_cfg_value(pam_handle_t *pamh, const char *key,$/;"	f	file:
+get_error_msg	pam_google_authenticator.c	/^const char *get_error_msg(void) {$/;"	f
+get_error_msg	pam_google_authenticator_unittest.c	/^static const char *get_error_msg(void) {$/;"	f	file:
+get_first_pass	pam_google_authenticator.c	/^static char *get_first_pass(pam_handle_t *pamh) {$/;"	f	file:
+get_hotp_counter	pam_google_authenticator.c	/^static long get_hotp_counter(pam_handle_t *pamh, const char *buf) {$/;"	f	file:
+get_secret_filename	pam_google_authenticator.c	/^static char *get_secret_filename(pam_handle_t *pamh, const Params *params,$/;"	f	file:
+get_shared_secret	pam_google_authenticator.c	/^static uint8_t *get_shared_secret(pam_handle_t *pamh,$/;"	f	file:
+get_time	pam_google_authenticator.c	/^static time_t get_time(void) {$/;"	f	file:
+get_timestamp	pam_google_authenticator.c	/^static int get_timestamp(void) {$/;"	f	file:
+get_user_name	pam_google_authenticator.c	/^static const char *get_user_name(pam_handle_t *pamh) {$/;"	f	file:
+google_authenticator	pam_google_authenticator.c	/^static int google_authenticator(pam_handle_t *pamh, int flags,$/;"	f	file:
+hmac_sha1	hmac.c	/^void hmac_sha1(const uint8_t *key, int keyLength,$/;"	f
+invalidate_timebased_code	pam_google_authenticator.c	/^static int invalidate_timebased_code(int tm, pam_handle_t *pamh,$/;"	f	file:
+is_totp	pam_google_authenticator.c	/^static int is_totp(const char *buf) {$/;"	f	file:
+jmpbuf	demo.c	/^static sigjmp_buf jmpbuf;$/;"	v	file:
+jmpbuf_valid	demo.c	/^static int jmpbuf_valid;$/;"	v	file:
+local	sha1.h	/^  int      local;$/;"	m	struct:__anon5
+log_message	pam_google_authenticator.c	/^static void log_message(int priority, pam_handle_t *pamh,$/;"	f	file:
+main	demo.c	/^int main(int argc, char *argv[]) {$/;"	f
+main	google-authenticator.c	/^int main(int argc, char *argv[]) {$/;"	f
+main	pam_google_authenticator_unittest.c	/^int main(int argc, char *argv[]) {$/;"	f
+maybe	google-authenticator.c	/^static int maybe(const char *msg) {$/;"	f	file:
+maybeAddOption	google-authenticator.c	/^static char *maybeAddOption(const char *msg, char *buf, size_t nbuf,$/;"	f	file:
+no_increment_hotp	pam_google_authenticator.c	/^  int        no_increment_hotp;$/;"	m	struct:Params	file:
+noskewadj	pam_google_authenticator.c	/^  int        noskewadj;$/;"	m	struct:Params	file:
+nullok	pam_google_authenticator.c	/^  enum { NULLERR=0, NULLOK, SECRETNOTFOUND } nullok;$/;"	m	struct:Params	typeref:enum:Params::__anon2	file:
+num_prompts_shown	pam_google_authenticator_unittest.c	/^static int num_prompts_shown = 0;$/;"	v	file:
+old_termios	demo.c	/^static struct termios old_termios;$/;"	v	typeref:struct:termios	file:
+oom	pam_google_authenticator.c	/^static char oom;$/;"	v	file:
+open_secret_file	pam_google_authenticator.c	/^static int open_secret_file(pam_handle_t *pamh, const char *secret_filename,$/;"	f	file:
+pam_get_item	demo.c	/^int pam_get_item(const pam_handle_t *pamh, int item_type,$/;"	f
+pam_get_item	pam_google_authenticator_unittest.c	/^int pam_get_item(const pam_handle_t *pamh, int item_type,$/;"	f
+pam_module	pam_google_authenticator_unittest.c	/^static void *pam_module;$/;"	v	file:
+pam_set_item	demo.c	/^int pam_set_item(pam_handle_t *pamh, int item_type,$/;"	f
+pam_set_item	pam_google_authenticator_unittest.c	/^int pam_set_item(pam_handle_t *pamh, int item_type,$/;"	f
+pam_sm_authenticate	pam_google_authenticator.c	/^PAM_EXTERN int pam_sm_authenticate(pam_handle_t *pamh, int flags,$/;"	f
+pam_sm_open_session	pam_google_authenticator.c	/^PAM_EXTERN int pam_sm_open_session(pam_handle_t *pamh, int flags,$/;"	f
+pam_sm_setcred	pam_google_authenticator.c	/^PAM_EXTERN int pam_sm_setcred(pam_handle_t *pamh, int flags, int argc,$/;"	f
+parse_args	pam_google_authenticator.c	/^static int parse_args(pam_handle_t *pamh, int argc, const char **argv,$/;"	f	file:
+parse_user	pam_google_authenticator.c	/^static int parse_user(pam_handle_t *pamh, const char *name, uid_t *uid) {$/;"	f	file:
+pass_mode	pam_google_authenticator.c	/^  enum { PROMPT = 0, TRY_FIRST_PASS, USE_FIRST_PASS } pass_mode;$/;"	m	struct:Params	typeref:enum:Params::__anon3	file:
+print_diagnostics	demo.c	/^static void print_diagnostics(int signo) {$/;"	f	file:
+print_diagnostics	pam_google_authenticator_unittest.c	/^static void print_diagnostics(int signo) {$/;"	f	file:
+pw	pam_google_authenticator_unittest.c	/^static const char pw[] = "0123456789";$/;"	v	file:
+qr_mode	google-authenticator.c	/^static enum { QR_UNSET=0, QR_NONE, QR_ANSI, QR_UTF8 } qr_mode = QR_UNSET;$/;"	v	typeref:enum:__anon1	file:
+rate_limit	pam_google_authenticator.c	/^static int rate_limit(pam_handle_t *pamh, const char *secret_filename,$/;"	f	file:
+read_file_contents	pam_google_authenticator.c	/^static char *read_file_contents(pam_handle_t *pamh,$/;"	f	file:
+refresh	totp.html	/^function refresh() {$/;"	f
+request_pass	pam_google_authenticator.c	/^static char *request_pass(pam_handle_t *pamh, int echocode,$/;"	f	file:
+reset_console	demo.c	/^static void reset_console(int signo) {$/;"	f	file:
+response	pam_google_authenticator_unittest.c	/^static char *response = "";$/;"	v	file:
+s	utc-time/utc-time.py	/^s = time.strftime('%a, %e %b %Y %T GMT', u)$/;"	v
+secret_filename_spec	pam_google_authenticator.c	/^  const char *secret_filename_spec;$/;"	m	struct:Params	file:
+set_cfg_value	pam_google_authenticator.c	/^static int set_cfg_value(pam_handle_t *pamh, const char *key, const char *val,$/;"	f	file:
+set_time	pam_google_authenticator.c	/^void set_time(time_t t) {$/;"	f
+setgroup	pam_google_authenticator.c	/^static int setgroup(int gid) {$/;"	f	file:
+setuser	pam_google_authenticator.c	/^static int setuser(int uid) {$/;"	f	file:
+sha1	totp.html	/^  function sha1(C){$/;"	f
+sha1_final	sha1.c	/^sha1_final(SHA1_INFO *sha1_info, uint8_t digest[20])$/;"	f
+sha1_init	sha1.c	/^sha1_init(SHA1_INFO *sha1_info)$/;"	f
+sha1_transform	sha1.c	/^sha1_transform(SHA1_INFO *sha1_info)$/;"	f	file:
+sha1_transform_and_copy	sha1.c	/^sha1_transform_and_copy(unsigned char digest[20], SHA1_INFO *sha1_info)$/;"	f	file:
+sha1_update	sha1.c	/^sha1_update(SHA1_INFO *sha1_info, const uint8_t *buffer, int count)$/;"	f
+stop	demo.c	/^static void stop(int signo) {$/;"	f	file:
+t	utc-time/utc-time.py	/^t = time.time()$/;"	v
+time	utc-time/utc-time.py	/^import time$/;"	i
+totp	totp.html	/^function totp(K,t) {$/;"	f
+u	utc-time/utc-time.py	/^u = time.gmtime(t)$/;"	v
+uid	pam_google_authenticator.c	/^  uid_t      uid;$/;"	m	struct:Params	file:
+urlEncode	google-authenticator.c	/^static const char *urlEncode(const char *s) {$/;"	f	file:
+usage	google-authenticator.c	/^static void usage(void) {$/;"	f	file:
+verify_prompts_shown	pam_google_authenticator_unittest.c	/^static void verify_prompts_shown(int expected_prompts_shown) {$/;"	f	file:
+window_size	pam_google_authenticator.c	/^static int window_size(pam_handle_t *pamh, const char *secret_filename,$/;"	f	file:
+write_file_contents	pam_google_authenticator.c	/^static int write_file_contents(pam_handle_t *pamh, const char *secret_filename,$/;"	f	file:
