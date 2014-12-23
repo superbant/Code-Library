@@ -13,6 +13,7 @@
     "Plugin 'c.vim'
     "Plugin 'a.vim'
     "Plugin 'EasyMotion'
+    "Plugin 'Syntastic'
     "Plugin 'SirVer/ultisnips'
     "Plugin 'honza/vim-snippets'
     "QuickFix 内置插件
@@ -109,8 +110,6 @@ nmap <leader>bb :Tab /=<CR>
 " <leader>bn 自定义对齐    
 nmap <leader>bn :Tab /
 
-
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "目录列表
 Plugin 'The-NERD-tree'
@@ -184,6 +183,21 @@ Plugin 'a.vim'
 "快速移动
 Plugin 'EasyMotion'
 "help easymotion <leader><leader> w
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"支持多语言的实时语法检查
+Plugin 'Syntastic'
+"set error or warning signs
+let g:syntastic_error_symbol = '×' 
+let g:syntastic_warning_symbol = '∷'
+let g:syntastic_check_on_open=1
+let g:syntastic_enable_highlighting = 0
+let g:syntastic_cpp_include_dirs = ['/usr/include/']
+let g:syntastic_cpp_remove_include_errors = 1
+let g:syntastic_cpp_check_header = 1
+let g:syntastic_cpp_compiler = 'clang++'
+let g:syntastic_cpp_compiler_options = '-std=c++11 -stdlib=libstdc++'
+let g:syntastic_enable_balloons = 1 "whether to show balloons
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "快速插入代码片段
