@@ -1,35 +1,38 @@
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Global 
-" => Bundle  
-    "Plugin 'gmarik/Vundle.vim'
-    "Plugin 'Valloric/YouCompleteMe'
-    "Plugin 'Tabular'
-    "Plugin 'The-NERD-tree'
-    "Plugin 'The-NERD-Commenter'
-    "Plugin 'taglist.vim'
-    "Plugin 'Tagbar'
-    "Plugin 'minibufexpl.vim'
-    "Plugin 'c.vim'
-    "Plugin 'a.vim'
-    "Plugin 'EasyMotion'
-    "Plugin 'Syntastic'
-    "Plugin 'SirVer/ultisnips'
-    "Plugin 'honza/vim-snippets'
-    "QuickFix 内置插件
+" => Vundle
 " => VIM user interface
 " => Colors and Fonts
 " => Text, tab and indent related
 " => Moving around, tabs, windows and buffers
 " => Misc
-
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Global 
 "ctags -I __THROW -I __attribute_pure__ -I __nonnull -I __attribute__ --file-scope=yes --langmap=c:+.h --languages=c,c++ --links=yes --c-kinds=+p --c++-kinds=+p --fields=+iaS --extra=+q  -f ~/.vim/systags /usr/include/* /usr/include/sys/* /usr/include/bits/*  /usr/include/netinet/* /usr/include/arpa/* /usr/include/mysql/* /usr/include/x86_64-linux-gnu/bits/* /usr/include/x86_64-linux-gnu/sys/*
 "map <F8> :!ctags -R –c++-kinds=+p –fields=+iaS –extra=+q .<CR>
-set tags+=../tags,./tags,~/.vim/systags
-set path+=/root/2.1/vp_kit/,/usr/include,/usr/include/x86_64-linux-gnu/,/usr/local/include,
+
+
+"ctags
+set tags+=./tags,../tags
+set path+=/usr/include,/usr/include/x86_64-linux-gnu/,/usr/local/include
+
+"cscope
+if has("cscope")
+	set csprg=/usr/local/bin/cscope
+	set csto=0
+	set cst
+	set nocsverb
+	" add any database in current directory
+	if filereadable("cscope.out")
+	    cs add cscope.out
+	" else add database pointed to by environment
+	elseif $CSCOPE_DB != ""
+	    cs add $CSCOPE_DB
+	endif
+	set csverb
+endif
+
 
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
@@ -43,9 +46,8 @@ command W w !sudo tee % > /dev/null
 "Ignore compiled files
 set wildignore=*.o,*~,*.pyc,.git/*,.hg/*,.svn/*
 
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Bundle  
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Vundle
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
@@ -55,7 +57,6 @@ call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
 
@@ -63,181 +64,30 @@ Plugin 'gmarik/Vundle.vim'
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
 "Plugin 'tpope/vim-fugitive'
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 自动补全及语法检查
-Plugin 'Valloric/YouCompleteMe'
-set completeopt=longest,menu  " I really HATE the preview window!!!
-"让Vim的补全菜单行为与一般IDE一致
-autocmd InsertLeave * if pumvisible() == 0|pclose|endif
-"回车即选中当前项
-inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"    
-"上下左右键的行为 会显示其他信息
-inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
-inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
-inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
-inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
-"youcompleteme  默认tab  s-tab 和自动补全冲突
-let g:ycm_key_list_select_completion=['<c-n>']
-let g:ycm_key_list_select_completion = ['<Down>']
-let g:ycm_key_list_previous_completion=['<c-p>']
-let g:ycm_key_list_previous_completion = ['<Up>']
-"关闭加载.ycm_extra_conf.py提示
-let g:ycm_confirm_extra_conf=0
-" 开启 YCM 基于标签引擎
-let g:ycm_collect_identifiers_from_tags_files=1 
-" 禁止缓存匹配项,每次都重新生成匹配项
-let g:ycm_cache_omnifunc=0  
-" 语法关键字补全
-let g:ycm_seed_identifiers_with_syntax=1    
-let g:ycm_error_symbol = '>>'
-let g:ycm_warning_symbol = '>*'
-" 跳转到定义处
-nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR> 
-"open locationlist
-nnoremap <leader>lo :lopen<CR> 
-"close locationlist
-nnoremap <leader>lc :lclose<CR>    
-"在注释输入中也能补全
-let g:ycm_complete_in_comments = 1
 " plugin from http://vim-scripts.org/vim/scripts.html
 "Plugin 'L9'
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"[range] Tabluarize /{char1}参照char1对齐文本 for code alignment
-Plugin 'Tabular'
-" <leader>bb 按=号对齐代码 
-nmap <leader>bb :Tab /=<CR>
-" <leader>bn 自定义对齐    
-nmap <leader>bn :Tab /
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"目录列表
-Plugin 'The-NERD-tree'
-nmap <leader>nt :NERDTree<cr>:set rnu<cr>
-let NERDTreeShowBookmarks=1
-let NERDTreeShowFiles=1
-let NERDTreeShowHidden=1
-let NERDTreeShowLineNumbers=1
-let NERDTreeWinPos=1
-let NERDTreeHighlightCursorline=1
-let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.obj$', '\.o$', '\.so$', '\.egg$', '^\.git$', '^\.svn$', '^\.hg$' ]
-"close vim if the only window left open is a NERDTree
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | end
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"NERD_commenter 快速批量注释,方便好用
-Plugin 'The-NERD-Commenter'
-"<leader>cc 注释当前选中文本
-"<leader>cu 取消选中文本块的注释。
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-Plugin 'taglist.vim'
-":Tlist 打开list窗口
-nmap <leader>tl :Tlist<CR><c-l>                
-let Tlist_Show_One_File        = 1             " 只显示当前文件的tags
-let Tlist_Exit_OnlyWindow      = 1             " 如果Taglist窗口是最后一个窗口则退出Vim
-let Tlist_Use_Right_Window     = 1             " 在右侧窗口中显示
-let Tlist_File_Fold_Auto_Close = 1             " 自动折叠
-let Tlist_Sort_Type = "name"                  "tems in tags sorted by name 
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"标签导航
-Plugin 'Tagbar'
-" ,tb 打开tagbar窗口
-nmap <leader>tb :TagbarToggle<CR>  
-let g:tagbar_autofocus = 1
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"多文档编辑
-Plugin 'minibufexpl.vim'
-" 多文件切换，也可使用鼠标双击相应文件名进行切换
-let g:miniBufExplMapWindowNavVim    = 1
-let g:miniBufExplMapWindowNavArrows = 1
-let g:miniBufExplMapCTabSwitchBufs  = 1
-let g:miniBufExplModSelTarget       = 1
-"解决FileExplorer窗口变小问题
-let g:miniBufExplForceSyntaxEnable = 1
-let g:miniBufExplorerMoreThanOne=2
-let g:miniBufExplCycleArround=1
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"C语言快捷编辑工具"
-Plugin 'c.vim'
-"\if      添加函数
-"\im    添加主函数
-"\cfu   添加 一筐 注释
-"\p<   添加 include
-"\p"    添加 include
-"\nr    插入一段 代码片段， 该代码片段在~/.vim/c-support/codesnippets
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"切换源文件头文件
-Plugin 'a.vim'
-":A 在同一tab切换源文件/头文件
-":AV 竖向切割窗口,打开对应的源文件/头文件
-":AS 横向切割窗口,打开对应的源文件/头文件
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"快速移动
-Plugin 'EasyMotion'
-"help easymotion <leader><leader> w
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"支持多语言的实时语法检查
-Plugin 'Syntastic'
-"set error or warning signs
-let g:syntastic_error_symbol = '×' 
-let g:syntastic_warning_symbol = '∷'
-let g:syntastic_check_on_open=1
-let g:syntastic_enable_highlighting = 0
-let g:syntastic_cpp_include_dirs = ['/usr/include/']
-let g:syntastic_cpp_remove_include_errors = 1
-let g:syntastic_cpp_check_header = 1
-let g:syntastic_cpp_compiler = 'clang++'
-let g:syntastic_cpp_compiler_options = '-std=c++11 -stdlib=libstdc++'
-let g:syntastic_enable_balloons = 1 "whether to show balloons
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"快速插入代码片段
-" Track the engine.
-Plugin 'SirVer/ultisnips'
-" Snippets are separated from the engine. Add this if you want them:
-Plugin 'honza/vim-snippets'
-" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-" If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"QuickFix 内置插件
-" search word under cursor like source insight
-" <cword> is replaced with the word under the cursor (like |star|) (:help cmdline or :help cword)
-map <F9> :execute "let g:word=expand(\"<cword>\")"<Bar>execute "vimgrep /\\<" . g:word ."\\>/g **/*.[ch] **/*.cpp"<Bar>execute "cc 1"<Bar>execute "cw"<CR>
-" next matched line
-map <silent> <F10> :cnext<CR>
-" previous matched line
-map <silent> <F11> :cprevious<CR>
-" open QuickFix
-" :copen
-" close QuickFix
-" :cclose
-
 " Git plugin not hosted on GitHub
 "Plugin 'git://git.wincent.com/command-t.git'
-
 " git repos on your local machine (i.e. when working on your own plugin)
 "Plugin 'file:///home/gmarik/path/to/plugin'
-
 " The sparkup vim script is in a subdirectory of this repo called vim.
 " Pass the path to set the runtimepath properly.
 "Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-
 " Avoid a name conflict with L9
 "Plugin 'user/L9', {'name': 'newL9'}
 
+
+Plugin 'Tabular'
+Plugin 'The-NERD-tree'
+Plugin 'The-NERD-Commenter'
+Plugin 'taglist.vim'
+Plugin 'Tagbar'
+Plugin 'c.vim'
+Plugin 'a.vim'
+"Plugin 'EasyMotion'
+"Plugin 'SirVer/ultisnips'
+"Plugin 'honza/vim-snippets'
+"Plugin 'Valloric/YouCompleteMe'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -256,9 +106,163 @@ filetype plugin indent on    " required
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 自动补全及语法检查 Valloric/YouCompleteMe
+set completeopt=longest,menu  " I really HATE the preview window!!!
+""让Vim的补全菜单行为与一般IDE一致
+"autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+""回车即选中当前项
+"inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"    
+""上下左右键的行为 会显示其他信息
+"inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
+"inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
+"inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
+"inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
+""youcompleteme  默认tab  s-tab 和自动补全冲突
+"let g:ycm_key_list_select_completion=['<c-n>']
+"let g:ycm_key_list_select_completion = ['<Down>']
+"let g:ycm_key_list_previous_completion=['<c-p>']
+"let g:ycm_key_list_previous_completion = ['<Up>']
+""关闭加载.ycm_extra_conf.py提示
+"let g:ycm_confirm_extra_conf=0
+"" 开启 YCM 基于标签引擎
+"let g:ycm_collect_identifiers_from_tags_files=1 
+"" 禁止缓存匹配项,每次都重新生成匹配项
+"let g:ycm_cache_omnifunc=0  
+"" 语法关键字补全
+"let g:ycm_seed_identifiers_with_syntax=1    
+"let g:ycm_error_symbol = '>>'
+"let g:ycm_warning_symbol = '>*'
+"" 跳转到定义处
+"nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR> 
+""open locationlist
+"nnoremap <leader>lo :lopen<CR> 
+""close locationlist
+"nnoremap <leader>lc :lclose<CR>    
+""在注释输入中也能补全
+"let g:ycm_complete_in_comments = 1
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"[range] Tabluarize /{char1} 对齐文本  Tabular
+" <leader>bb 按=号对齐代码 
+nmap <leader>bb :Tab /=<CR>
+" <leader>bn 自定义对齐    
+nmap <leader>bn :Tab /
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"目录列表 The-NERD-tree
+nmap <leader>nt :NERDTree<cr>:set rnu<cr>
+let NERDTreeShowBookmarks=1
+let NERDTreeShowFiles=1
+let NERDTreeShowHidden=1
+let NERDTreeShowLineNumbers=1
+let NERDTreeWinPos=1
+let NERDTreeHighlightCursorline=1
+let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.obj$', '\.o$', '\.so$', '\.egg$', '^\.git$', '^\.svn$', '^\.hg$' ]
+"close vim if the only window left open is a NERDTree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | end
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"快速批量注释,方便好用 The-NERD-Commenter
+"<leader>cc 注释当前选中文本
+"<leader>cu 取消选中文本块的注释。
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"标签导航 taglist.vim
+"<leader>tl 打开taglist窗口
+nmap <leader>tl :Tlist<CR><c-l>                
+let Tlist_Show_One_File        = 1             " 只显示当前文件的tags
+let Tlist_Exit_OnlyWindow      = 1             " 如果Taglist窗口是最后一个窗口则退出Vim
+let Tlist_Use_Right_Window     = 1             " 在右侧窗口中显示
+let Tlist_File_Fold_Auto_Close = 1             " 自动折叠
+let Tlist_Sort_Type = "name"                  "tems in tags sorted by name 
+let Tlist_Ctags_Cmd="/usr/bin/ctags"
+map <C-m>n :!ctags -R ../*<CR>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"标签导航 Tagbar
+"<leader>tb 打开tagbar窗口
+nmap <leader>tb :TagbarToggle<CR>  
+let g:tagbar_autofocus = 1
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"C语言快捷编辑工具 c.vim
+"\if      添加函数
+"\im    添加主函数
+"\cfu   添加 一筐 注释
+"\p<   添加 include
+"\p"    添加 include
+"\nr    插入一段 代码片段， 该代码片段在~/.vim/c-support/codesnippets
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"切换源文件头文件 a.vim
+":A 在同一tab切换源文件/头文件
+":AV 竖向切割窗口,打开对应的源文件/头文件
+":AS 横向切割窗口,打开对应的源文件/头文件
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"快速移动 EasyMotion
+"help easymotion <leader><leader> w
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"快速插入代码片段 'SirVer/ultisnips' 'honza/vim-snippets'
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"QuickFix 内置插件
+" search word under cursor like source insight
+" <cword> is replaced with the word under the cursor (like |star|) (:help cmdline or :help cword)
+map <F9> :execute "let g:word=expand(\"<cword>\")"<Bar>execute "vimgrep /\\<" . g:word ."\\>/g **/*.[ch] **/*.cpp"<Bar>execute "cc 1"<Bar>execute "cw"<CR>
+" next matched line
+map <silent> <F10> :cnext<CR>
+" previous matched line
+map <silent> <F11> :cprevious<CR>
+" open QuickFix
+" :copen
+" close QuickFix
+" :cclose
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 0 -不记录上次的补全方式 
+" 1 -记住上次的补全方式,直到用其他的补全命令改变它 
+" 2 -记住上次的补全方式,直到按ESC退出插入模式为止 
+let g:SuperTabDefaultCompletionType="context"
+let g:SuperTabRetainCompletionType=2
+let g:SuperTabDefaultCompletionType="<C-X><C-O>"
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"cscope设置
+set cscopequickfix=s-,c-,d-,i-,t-,e-
+
+nmap <C-Space>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+nmap <C-Space>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+nmap <C-Space>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+nmap <C-Space>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+nmap <C-Space>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+nmap <C-Space>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+nmap <C-Space>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+nmap <C-Space>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"设置界面分割WMToggle
+"let g:winManagerWindowLayout = "BufExplorer,FileExplorer|TagList"
+let g:winManagerWindowLayout='FileExplorer|TagList'
+"设置winmanager的宽度，默认为25
+let g:winManagerHigh = 30
+nmap wm :WMToggle<cr>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
 "允许未保存切换buffer 隐藏buff
 set hidden
+
+"修改注释颜色
+highlight Comment ctermfg=blue guifg=blue
 
 "可以在buffer的任何地方使用鼠标（类似office中在工作区双击鼠标定位）
 "set mouse=a
@@ -268,11 +272,17 @@ set hidden
 "复制之前的缩进
 set copyindent
 
+"行内替换
+set gdefault
+
 " Set to auto read when a file is changed from the outside
 set autoread
 
 "显示行号
 set number
+
+"历史记录数
+set history=1000
 
 "Always show current position
 set ruler
@@ -308,6 +318,9 @@ set magic
 " Show matching brackets when text indicator is over them
 set showmatch
 
+"匹配括号高亮的时间（单位是十分之一秒）
+set matchtime=5
+
 "匹配括号的规则，增加针对html的<>
 set matchpairs=(:),{:},[:],<:>
 
@@ -331,6 +344,7 @@ set scrolloff=3
 " Always show the status line
 set laststatus=2
 set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}:%{&fenc!=''?&fenc:&enc}]\ [TYPE=%Y]\ [ROW=%03l/%L(%p%%)]\ [COL=%03v]
+"set statusline=%F%m%r%h%w\[FORMAT=%{&ff}]\[TYPE=%Y]\[POS=%l,%v][%p%%]\%{strftime(\"%Y-%m-%d\ \%H:%M\")}
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
@@ -345,7 +359,7 @@ set termencoding=utf-8    "用于屏幕显示
 set langmenu=zh_CN.UTF-8
 set helplang=cn
 set fileencodings=utf-8,ucs-bom,cp936,gb18030,big5,euc-jp,euc-kr,latin1
-set fenc=utf-8
+set fencs=utf-8,ucs-bom,shift-jis,gb18030,gb2312,cp936
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Text, tab and indent related
@@ -367,6 +381,10 @@ set smartindent
 
 "字符间插入的像素数目
 set linespace=0
+
+"增强模式中的命令行自动完成操作
+set wildmenu
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Moving around, tabs, windows and buffers
@@ -399,6 +417,9 @@ nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
 "代码折叠
 set foldenable
 set foldmethod=manual
+
+"通过使用：commands命令，告诉我们文件 的哪一行被改变过
+set report=0
 
 " Turn backup off, since most stuff is in SVN, git et.c anyway...
 set nobackup
