@@ -250,12 +250,14 @@ nmap <C-@>d :cs find d <C-R>=expand("<cword>")<CR><CR>
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"winmanager
 "设置界面分割WMToggle
 "let g:winManagerWindowLayout = "BufExplorer,FileExplorer|TagList"
 let g:winManagerWindowLayout='FileExplorer|TagList'
-"设置winmanager的宽度，默认为25
+"设置宽度，默认为25
 let g:winManagerHigh = 30
 nmap wm :WMToggle<cr>
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
