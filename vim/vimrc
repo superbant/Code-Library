@@ -85,6 +85,7 @@ Plugin 'Tagbar'
 Plugin 'c.vim'
 Plugin 'a.vim'
 Plugin 'winmanager'
+Plugin 'SuperTab'
 "Plugin 'EasyMotion'
 "Plugin 'SirVer/ultisnips'
 "Plugin 'honza/vim-snippets'
@@ -227,6 +228,7 @@ map <silent> <F11> :cprevious<CR>
 " :cclose
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"SuperTab
 " 0 -不记录上次的补全方式 
 " 1 -记住上次的补全方式,直到用其他的补全命令改变它 
 " 2 -记住上次的补全方式,直到按ESC退出插入模式为止 
