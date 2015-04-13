@@ -14,7 +14,7 @@
 
 
 "ctags
-set tags+=./tags,../tags
+set tags+=./tags,../tags,/root/.vim/systags
 set path+=/usr/include,/usr/include/x86_64-linux-gnu/,/usr/local/include
 
 "cscope
