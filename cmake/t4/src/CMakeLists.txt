@@ -1,0 +1,6 @@
+INCLUDE_DIRECTORIES(/tmp/t3/usr/include/hello)
+LINK_DIRECTORIES(/tmp/t3/usr/lib/)
+ADD_EXECUTABLE(main  main.c)
+#TARGET_LINK_LIBRARIES(main libhello.a)
+TARGET_LINK_LIBRARIES(main hello)
+set(CMAKE_CXX_FLAGS "-g -Wall -Wextra -Wshadow")
