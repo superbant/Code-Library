@@ -67,15 +67,15 @@ filetype plugin indent on    " required
 
 
 "ctags
-set tags+=./tags,../tags,/root/.vim/systags,/root/yanwf/c/snort-2.9.8.0/tags,/root/dp/dac2.1/tags
-",/root/yanwf/c/snort-2.2.0/tags,/root/yanwf/c/dpdk/tags
+set tags+=./tags,../tags,/root/.vim/systags
 set path+=/usr/include,/usr/include/x86_64-linux-gnu/,/usr/local/include
 
 "cscope
 if has("cscope")
 	set csprg=/usr/bin/cscope
 	set csto=0 "default 0
-	set nocst " ues cstag instead of tag
+	set cst " ues cstag instead of tag
+	"set nocst 
 	set nocsverb
 	" add any database in current directory
 	if filereadable("cscope.out")
@@ -90,18 +90,6 @@ endif
 "cscope设置
 set cscopequickfix=s-,c-,d-,i-,t-,e-
 
-nmap <C-@>s :cs find s <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@>g :cs find g <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@>c :cs find c <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@>t :cs find t <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@>e :cs find e <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
-nmap <C-@>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-nmap <C-@>d :cs find d <C-R>=expand("<cword>")<CR><CR>
-
-
-
-
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
 let mapleader = ","
@@ -113,6 +101,23 @@ command W w !sudo tee % > /dev/null
 
 "Ignore compiled files
 set wildignore=*.o,*~,*.pyc,.git/*,.hg/*,.svn/*
+
+nmap <leader>s :scs find s <C-R>=expand("<cword>")<CR><CR>
+nmap <leader>g :scs find g <C-R>=expand("<cword>")<CR><CR>
+nmap <leader>c :scs find c <C-R>=expand("<cword>")<CR><CR>
+nmap <leader>t :scs find t <C-R>=expand("<cword>")<CR><CR>
+nmap <leader>e :scs find e <C-R>=expand("<cword>")<CR><CR>
+nmap <leader>f :scs find f <C-R>=expand("<cfile>")<CR><CR>
+nmap <leader>i :scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+nmap <leader>d :scs find d <C-R>=expand("<cword>")<CR><CR>
+
+nmap <leader><leader>s :vert scs find s <C-R>=expand("<cword>")<CR><CR>
+nmap <leader><leader>g :vert scs find g <C-R>=expand("<cword>")<CR><CR>
+nmap <leader><leader>c :vert scs find c <C-R>=expand("<cword>")<CR><CR>
+nmap <leader><leader>t :vert scs find t <C-R>=expand("<cword>")<CR><CR>
+nmap <leader><leader>e :vert scs find e <C-R>=expand("<cword>")<CR><CR>
+nmap <leader><leader>i :vert scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+nmap <leader><leader>d :vert scs find d <C-R>=expand("<cword>")<CR><CR>
 
 "=====================The-NERD-Commenter=================================
 "快速批量注释,方便好用 The-NERD-Commenter
@@ -277,7 +282,6 @@ set scrolloff=3
 " Always show the status line
 set laststatus=2
 set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}:%{&fenc!=''?&fenc:&enc}]\ [TYPE=%Y]\ [ROW=%03l/%L(%p%%)]\ [COL=%03v]
-
 "set statusline=%F%m%r%h%w\[FORMAT=%{&ff}]\[TYPE=%Y]\[POS=%l,%v][%p%%]\%{strftime(\"%Y-%m-%d\ \%H:%M\")}
 
 
