@@ -25,7 +25,7 @@ Plugin 'The-NERD-Commenter'
 Plugin 'Tagbar'
 Plugin 'c.vim'
 Plugin 'a.vim'
-Plugin 'ShowMarks'
+"Plugin 'ShowMarks'
 "Plugin 'winmanager'
 "Plugin 'code_complete'
 "Plugin 'echofunc.vim'
@@ -61,19 +61,19 @@ filetype plugin indent on    " required
 "
 "
 "=====================Global ========================================
-"ctags -I __THROW -I __attribute_pure__ -I __nonnull -I __attribute__ --file-scope=yes --langmap=c:+.h --languages=c,c++ --links=yes --c-kinds=+p --c++-kinds=+p --fields=+iaS --extra=+q  -f ~/.vim/systags /usr/include/* /usr/include/sys/* /usr/include/bits/*  /usr/include/netinet/* /usr/include/arpa/* /usr/include/mysql/* /usr/include/x86_64-linux-gnu/bits/* /usr/include/x86_64-linux-gnu/sys/*
-"
-"ctags -I __THROW -I __attribute_pure__ -I __nonnull -I __attribute__ --file-scope=yes --langmap=c:+.h --languages=c,c++ --links=yes --c-kinds=+p --c++-kinds=+p --fields=+iaS --extra=+q -R *
+"ctags -I __THROW -I __attribute_pure__ -I __nonnull -I __attribute__ --file-scope=yes --langmap=c:+.h --languages=c,c++ --links=yes --c-kinds=+p --c++-kinds=+p --fields=+iaS --extra=+q  -f ~/.vim/systags /usr/include /usr/local/include 
 
+"ctags -I __THROW -I __attribute_pure__ -I __nonnull -I __attribute__ --file-scope=yes --langmap=c:+.h --languages=c,c++ --links=yes --c-kinds=+p --c++-kinds=+p --fields=+iaS --extra=+q -f ~/.vim/systags /usr/include/* /usr/include/sys/* /usr/include/bits/* /usr/include/netinet/* /usr/include/arpa/* /usr/include/mysql/* /usr/include/x86_64-linux-gnu/*
 
 "ctags
 set tags+=./tags,../tags,/root/.vim/systags
+
 set path+=/usr/include,/usr/include/x86_64-linux-gnu/,/usr/local/include
 
 "cscope
 if has("cscope")
 	set csprg=/usr/bin/cscope
-	set csto=0 "default 0
+	set csto=1 "default 0
 	set cst " ues cstag instead of tag
 	"set nocst 
 	set nocsverb
@@ -233,7 +233,8 @@ set backspace=eol,start,indent
 set whichwrap+=b,s,<,>,[,],h,l
 
 "带有如下符号的单词不要换行分割
-set iskeyword+=_,$,@,%,#,-
+set iskeyword=a-z,A-Z,48-57,_
+"set iskeyword+=_,$,@,%,#,-
 
 " Ignore case when searching
  set ignorecase
@@ -282,6 +283,7 @@ set scrolloff=3
 " Always show the status line
 set laststatus=2
 set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}:%{&fenc!=''?&fenc:&enc}]\ [TYPE=%Y]\ [ROW=%03l/%L(%p%%)]\ [COL=%03v]
+
 "set statusline=%F%m%r%h%w\[FORMAT=%{&ff}]\[TYPE=%Y]\[POS=%l,%v][%p%%]\%{strftime(\"%Y-%m-%d\ \%H:%M\")}
 
 
@@ -370,3 +372,4 @@ noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
 
 " Toggle paste mode on and off
 map <leader>pp :setlocal paste!<cr>
+
