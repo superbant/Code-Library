@@ -236,8 +236,7 @@ set backspace=eol,start,indent
 set whichwrap+=b,s,<,>,[,],h,l
 
 "带有如下符号的单词不要换行分割
-set iskeyword=a-z,A-Z,48-57,_
-"set iskeyword+=_,$,@,%,#,-
+set iskeyword=@,48-57,_
 
 " Ignore case when searching
  set ignorecase
