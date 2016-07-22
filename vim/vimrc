@@ -225,6 +225,9 @@ set history=1000
 "Always show current position
 set ruler
 
+"show (partial) command keys in the status line
+set showcmd
+
 "Height of the command bar
 set cmdheight=2
 
