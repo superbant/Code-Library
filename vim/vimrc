@@ -33,6 +33,8 @@ Plugin 'a.vim'
 
 " Git plugin not hosted on GitHub
 "Plugin 'git://git.wincent.com/command-t.git'
+Plugin 'git://github.com/altercation/vim-colors-solarized.git'
+Plugin 'git://github.com/tomasr/molokai.git'
 
 " git repos on your local machine (i.e. when working on your own plugin)
 "Plugin 'file:///home/gmarik/path/to/plugin'
@@ -61,6 +63,20 @@ filetype plugin indent on    " required
 "
 "
 "=====================Global ========================================
+
+" Enable syntax highlighting
+syntax enable 
+
+set t_Co=256
+
+if has('gui_running')
+    set background=light
+else
+    set background=dark
+endif
+
+colorscheme molokai 
+
 "ctags -I __THROW -I __attribute_pure__ -I __nonnull -I __attribute__ --file-scope=yes --langmap=c:+.h --languages=c,c++ --links=yes --c-kinds=+p --c++-kinds=+p --fields=+iaS --extra=+q -R -f ~/.vim/systags /usr/include /usr/local/include
 
 "ctags -I __THROW -I __attribute_pure__ -I __nonnull -I __attribute__ --file-scope=yes --langmap=c:+.h --languages=c,c++ --links=yes --c-kinds=+p --c++-kinds=+p --fields=+iaS --extra=+q -f ~/.vim/systags /usr/include/* /usr/include/sys/* /usr/include/bits/* /usr/include/netinet/* /usr/include/arpa/* /usr/include/mysql/* /usr/include/x86_64-linux-gnu/*
@@ -289,8 +305,6 @@ set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}:%{&fenc!=''?&fenc:&enc}]\ [TYPE=%Y]\ [
 "set statusline=%F%m%r%h%w\[FORMAT=%{&ff}]\[TYPE=%Y]\[POS=%l,%v][%p%%]\%{strftime(\"%Y-%m-%d\ \%H:%M\")}
 
 
-" Enable syntax highlighting
-syntax enable 
 
 "Set utf8 as standard encoding 
 "en_US as the standard language
