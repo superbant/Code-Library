@@ -21,14 +21,11 @@ Plugin 'VundleVim/Vundle.vim'
 "Plugin 'L9'
 Plugin 'The-NERD-tree'
 Plugin 'The-NERD-Commenter'
-"Plugin 'taglist.vim'
+Plugin 'taglist.vim'
 Plugin 'Tagbar'
 Plugin 'c.vim'
 Plugin 'a.vim'
-"Plugin 'ShowMarks'
-"Plugin 'winmanager'
-"Plugin 'code_complete'
-"Plugin 'echofunc.vim'
+Plugin 'winmanager'
 
 
 " Git plugin not hosted on GitHub
@@ -63,27 +60,55 @@ filetype plugin indent on    " required
 "
 "
 "=====================Global ========================================
+"
+" With a map leader it's possible to do extra key combinations
+" like <leader>w saves the current file
+let mapleader = ","
+let g:mapleader = ","
 
+" :W sudo saves the file 
+" (useful for handling the permission-denied error)
+command W w !sudo tee % > /dev/null
+
+"=====================colors=================================
 " Enable syntax highlighting
+
 syntax enable 
 
+" 配色方案 
 set t_Co=256
 
-if has('gui_running')
+if  has('gui_running')
     set background=light
-else
+    colorscheme solarized 
+    " 主题 solarized Bundle 'altercation/vim-colors-solarized'
+    let g:solarized_termcolors=256 
+    let g:solarized_termtrans=1 
+    let g:solarized_contrast="normal" 
+    let g:solarized_visibility="normal" 
+
+    "colorscheme molokai 
+else 
     set background=dark
+    colorscheme molokai 
+    " 主题 molokai Bundle 'tomasr/molokai' 
+    let g:molokai_original = 1 
+
+    "colorscheme solarized 
 endif
 
-colorscheme molokai 
 
+"修改注释颜色
+"highlight Comment ctermfg=blue guifg=blue
+
+"=====================tags=================================
 "ctags -I __THROW -I __attribute_pure__ -I __nonnull -I __attribute__ --file-scope=yes --langmap=c:+.h --languages=c,c++ --links=yes --c-kinds=+p --c++-kinds=+p --fields=+iaS --extra=+q -R -f ~/.vim/systags /usr/include /usr/local/include
 
 "ctags -I __THROW -I __attribute_pure__ -I __nonnull -I __attribute__ --file-scope=yes --langmap=c:+.h --languages=c,c++ --links=yes --c-kinds=+p --c++-kinds=+p --fields=+iaS --extra=+q -f ~/.vim/systags /usr/include/* /usr/include/sys/* /usr/include/bits/* /usr/include/netinet/* /usr/include/arpa/* /usr/include/mysql/* /usr/include/x86_64-linux-gnu/*
 
+nmap <leader>ct :!ctags -R ../* <CR><CR>
 "ctags
 set tags+=./tags,../tags,/root/.vim/systags
-
 set path+=/usr/include,/usr/include/x86_64-linux-gnu/,/usr/local/include
 
 "cscope
@@ -106,14 +131,6 @@ endif
 "cscope设置
 set cscopequickfix=s-,c-,d-,i-,t-,e-
 
-" With a map leader it's possible to do extra key combinations
-" like <leader>w saves the current file
-let mapleader = ","
-let g:mapleader = ","
-
-" :W sudo saves the file 
-" (useful for handling the permission-denied error)
-command W w !sudo tee % > /dev/null
 
 "Ignore compiled files
 set wildignore=*.o,*~,*.pyc,.git/*,.hg/*,.svn/*
@@ -162,7 +179,6 @@ let Tlist_Use_Right_Window     = 1             " 在右侧窗口中显示
 let Tlist_File_Fold_Auto_Close = 1             " 自动折叠
 let Tlist_Sort_Type = "name"                  "tems in tags sorted by name 
 let Tlist_Ctags_Cmd="/usr/bin/ctags"
-map <C-m>n :!ctags -R ../*<CR>
 
 "=====================Tagbar========================================
 "<leader>tb 打开tagbar窗口
@@ -204,10 +220,13 @@ let g:tagbar_autofocus = 1
 
 "=====================winmanager========================================
 "winmanager
-"let g:winManagerWindowLayout = "BufExplorer,FileExplorer|TagList"
+let g:winManagerWindowLayout = "BufExplorer,FileExplorer|TagList"
 "let g:winManagerWindowLayout='FileExplorer|TagList'
 "设置宽度，默认为25
 let g:winManagerHigh = 30
+"在进入vim时自动打开winmanager
+"let g:AutoOpenWinManager = 1
+"快捷键打开WinManager
 nmap wm :WMToggle<cr>
 
 
@@ -215,8 +234,6 @@ nmap wm :WMToggle<cr>
 "允许未保存切换buffer 隐藏buff
 set hidden
 
-"修改注释颜色
-highlight Comment ctermfg=blue guifg=blue
 
 "可以在buffer的任何地方使用鼠标（类似office中在工作区双击鼠标定位）
 "set mouse=a
@@ -322,9 +339,9 @@ set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 
-" Linebreak on 500 characters
+" Linebreak on 100 characters
 set lbr
-set tw=500
+set textwidth=100
 
 "自动换行
 set wrap
