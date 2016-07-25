@@ -109,6 +109,7 @@ endif
 nmap <leader>ct :!ctags -R ../* <CR><CR>
 "ctags
 set tags+=./tags,../tags,/root/.vim/systags
+
 set path+=/usr/include,/usr/include/x86_64-linux-gnu/,/usr/local/include
 
 "cscope
@@ -248,6 +249,9 @@ set gdefault
 
 " Set to auto read when a file is changed from the outside
 set autoread
+
+"Write the contents of the file, if it has been modified
+set autowrite
 
 "显示行号
 set number
