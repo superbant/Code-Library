@@ -26,6 +26,7 @@ Plugin 'Tagbar'
 Plugin 'c.vim'
 Plugin 'a.vim'
 Plugin 'winmanager'
+Plugin 'bufexplorer.zip'
 
 
 " Git plugin not hosted on GitHub
@@ -109,6 +110,7 @@ endif
 nmap <leader>ct :!ctags -R ../* <CR><CR>
 "ctags
 set tags+=./tags,../tags,/root/.vim/systags
+
 set path+=/usr/include,/usr/include/x86_64-linux-gnu/,/usr/local/include
 
 "cscope
@@ -220,8 +222,7 @@ let g:tagbar_autofocus = 1
 
 "=====================winmanager========================================
 "winmanager
-let g:winManagerWindowLayout = "BufExplorer,FileExplorer|TagList"
-"let g:winManagerWindowLayout='FileExplorer|TagList'
+let g:winManagerWindowLayout='FileExplorer,BufExplorer|TagList'
 "设置宽度，默认为25
 let g:winManagerHigh = 30
 "在进入vim时自动打开winmanager
@@ -247,6 +248,9 @@ set gdefault
 
 " Set to auto read when a file is changed from the outside
 set autoread
+
+"Write the contents of the file, if it has been modified
+set autowrite
 
 "显示行号
 set number
@@ -316,10 +320,8 @@ set scrolloff=3
 
 " Always show the status line
 set laststatus=2
-set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}:%{&fenc!=''?&fenc:&enc}]\ [TYPE=%Y]\ [ROW=%03l/%L(%p%%)]\ [COL=%03v]
-
-"set statusline=%F%m%r%h%w\[FORMAT=%{&ff}]\[TYPE=%Y]\[POS=%l,%v][%p%%]\%{strftime(\"%Y-%m-%d\ \%H:%M\")}
-
+"set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}:%{&fenc!=''?&fenc:&enc}]\ [TYPE=%Y]\ [ROW=%03l/%L(%p%%)]\ [COL=%03v]
+set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")}
 
 
 "Set utf8 as standard encoding 
