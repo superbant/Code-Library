@@ -229,7 +229,6 @@ let g:winManagerHigh = 30
 "快捷键打开WinManager
 nmap wm :WMToggle<cr>
 
-
 "=====================general========================================
 "允许未保存切换buffer 隐藏buff
 set hidden
@@ -272,7 +271,7 @@ set whichwrap+=b,s,<,>,[,],h,l
 set iskeyword=@,48-57,_
 
 " Ignore case when searching
- set ignorecase
+set ignorecase
 
 " When searching try to be smart about cases 
 set smartcase
