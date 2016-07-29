@@ -231,9 +231,11 @@ let g:winManagerHigh = 30
 nmap wm :WMToggle<cr>
 
 "=====================general========================================
+"打开man手册，分割窗口 <leader>K
+runtime! ftplugin/man.vim
+
 "允许未保存切换buffer 隐藏buff
 set hidden
-
 
 "可以在buffer的任何地方使用鼠标（类似office中在工作区双击鼠标定位）
 "set mouse=a
@@ -331,6 +333,7 @@ set encoding=utf-8        "vim 内部使用的编码方式
 set termencoding=utf-8    "用于屏幕显示
 set langmenu=zh_CN.UTF-8
 set helplang=cn
+set fileformats=unix,dos
 set fileencodings=utf-8,ucs-bom,cp936,gb18030,big5,euc-jp,euc-kr,latin1
 set fencs=utf-8,ucs-bom,shift-jis,gb18030,gb2312,cp936
 
@@ -343,6 +346,7 @@ set shiftwidth=4
 " Linebreak on 100 characters
 set lbr
 set textwidth=100
+set formatoptions+=t
 
 "自动换行
 set wrap
@@ -397,7 +401,6 @@ autocmd BufReadPost *
      \ if line("'\"") > 0 && line("'\"") <= line("$") |
      \   exe "normal! g`\"" |
      \ endif
-
 " Remember info about open buffers on close
 set viminfo^=%
 
