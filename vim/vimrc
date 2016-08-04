@@ -411,5 +411,5 @@ noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
 " Toggle paste mode on and off
 map <leader>pp :setlocal paste!<cr>
 " ptag 
-au! CursorHold *.[ch] nested exe "silent! ptag " . expand("<cword>")
+"au! CursorHold *.[ch] nested exe "silent! ptag " . expand("<cword>")
 
