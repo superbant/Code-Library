@@ -29,7 +29,6 @@ Plugin 'a.vim'
 Plugin 'winmanager'
 Plugin 'bufexplorer.zip'
 
-
 " Git plugin not hosted on GitHub
 "Plugin 'git://git.wincent.com/command-t.git'
 Plugin 'git://github.com/altercation/vim-colors-solarized.git'
@@ -63,6 +62,7 @@ filetype plugin indent on    " required
 "
 "=====================Global ========================================
 "
+
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
 let mapleader = ","
@@ -99,20 +99,18 @@ else
     "colorscheme solarized 
 endif
 
-
 "修改注释颜色
-"highlight Comment ctermfg=blue guifg=blue
+highlight Comment ctermfg=blue guifg=blue
 
 "=====================tags=================================
 "ctags -I __THROW -I __attribute_pure__ -I __nonnull -I __attribute__ --file-scope=yes --langmap=c:+.h --languages=c,c++ --links=yes --c-kinds=+p --c++-kinds=+p --fields=+iaS --extra=+q -R -f ~/.vim/systags /usr/include /usr/local/include
 
 "ctags -I __THROW -I __attribute_pure__ -I __nonnull -I __attribute__ --file-scope=yes --langmap=c:+.h --languages=c,c++ --links=yes --c-kinds=+p --c++-kinds=+p --fields=+iaS --extra=+q -f ~/.vim/systags /usr/include/* /usr/include/sys/* /usr/include/bits/* /usr/include/netinet/* /usr/include/arpa/* /usr/include/mysql/* /usr/include/x86_64-linux-gnu/*
 
-nmap <leader>ct :!ctags -R ../* <CR><CR>
 "ctags
 set tags+=./tags,../tags,/root/.vim/systags
 
-set path+=/usr/include,/usr/include/x86_64-linux-gnu/,/usr/local/include
+set path+=/usr/include,/usr/include/x86_64-linux-gnu/,/usr/local/include/,/root/wes1.1/common/
 
 "cscope
 if has("cscope")
@@ -298,8 +296,11 @@ set magic
 " Show matching brackets when text indicator is over them
 set showmatch
 
+" no visualbell
+set novisualbell
+
 "匹配括号高亮的时间（单位是十分之一秒）
-set matchtime=5
+set matchtime=1
 
 "匹配括号的规则，增加针对html的<>
 set matchpairs=(:),{:},[:],<:>
@@ -335,14 +336,16 @@ set termencoding=utf-8    "用于屏幕显示
 set langmenu=zh_CN.UTF-8
 set helplang=cn
 set fileformats=unix,dos
-set fileencodings=utf-8,ucs-bom,cp936,gb18030,big5,euc-jp,euc-kr,latin1
-set fencs=utf-8,ucs-bom,shift-jis,gb18030,gb2312,cp936
+set fenc=utf-8
+"cp936 = gb2312
+set fencs=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1 
 
 " Use spaces instead of tabs, 1 tab == 4 spaces
 set expandtab
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
+set smarttab
 
 " Linebreak on 100 characters
 set lbr
@@ -411,6 +414,3 @@ noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
 
 " Toggle paste mode on and off
 map <leader>pp :setlocal paste!<cr>
-" ptag 
-"au! CursorHold *.[ch] nested exe "silent! ptag " . expand("<cword>")
-
