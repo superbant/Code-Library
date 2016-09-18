@@ -27,11 +27,12 @@ Plugin 'Tagbar'
 Plugin 'c.vim'
 Plugin 'a.vim'
 Plugin 'winmanager'
-Plugin 'bufexplorer.zip'
+Plugin 'OmniCppComplete'
+Plugin 'echofunc.vim'
+Plugin 'minibufexpl.vim'
 
 " Git plugin not hosted on GitHub
 "Plugin 'git://git.wincent.com/command-t.git'
-Plugin 'git://github.com/altercation/vim-colors-solarized.git'
 Plugin 'git://github.com/tomasr/molokai.git'
 
 " git repos on your local machine (i.e. when working on your own plugin)
@@ -79,59 +80,55 @@ syntax enable
 
 " 配色方案 
 set t_Co=256
+set background=dark
+colorscheme molokai 
 
-if  has('gui_running')
-    set background=light
-    colorscheme solarized 
-    " 主题 solarized Bundle 'altercation/vim-colors-solarized'
-    let g:solarized_termcolors=256 
-    let g:solarized_termtrans=1 
-    let g:solarized_contrast="normal" 
-    let g:solarized_visibility="normal" 
-
-    "colorscheme molokai 
-else 
-    set background=dark
-    colorscheme molokai 
-    " 主题 molokai Bundle 'tomasr/molokai' 
-    let g:molokai_original = 1 
-
-    "colorscheme solarized 
-endif
 
 "修改注释颜色
 highlight Comment ctermfg=blue guifg=blue
 
 "=====================tags=================================
-"ctags -I __THROW -I __attribute_pure__ -I __nonnull -I __attribute__ --file-scope=yes --langmap=c:+.h --languages=c,c++ --links=yes --c-kinds=+p --c++-kinds=+p --fields=+iaS --extra=+q -R -f ~/.vim/systags /usr/include /usr/local/include
+"ctags -I __THROW -I __attribute_pure__ -I __nonnull -I __attribute__ --file-scope=yes  --languages=c,c++ --links=yes --c++-kinds=+p --fields=+iaS --extra=+q -R -f ~/.vim/systags /usr/include /usr/local/include
 
-"ctags -I __THROW -I __attribute_pure__ -I __nonnull -I __attribute__ --file-scope=yes --langmap=c:+.h --languages=c,c++ --links=yes --c-kinds=+p --c++-kinds=+p --fields=+iaS --extra=+q -f ~/.vim/systags /usr/include/* /usr/include/sys/* /usr/include/bits/* /usr/include/netinet/* /usr/include/arpa/* /usr/include/mysql/* /usr/include/x86_64-linux-gnu/*
+"ctags -I __THROW -I __attribute_pure__ -I __nonnull -I __attribute__ --file-scope=yes  --languages=c,c++ --links=yes --c++-kinds=+p --fields=+iaS --extra=+q -f ~/.vim/systags /usr/include/* /usr/include/sys/* /usr/include/bits/* /usr/include/netinet/* /usr/include/arpa/* /usr/include/mysql/* /usr/include/x86_64-linux-gnu/*
+"ctags -R --c-kinds=+p --c++-kinds=+p --fields=+iaS --extra=+q *
 
 "ctags
-set tags+=./tags,../tags,/root/.vim/systags
+"//;不可省略 表示当前目录不存在tags，则在父目录中寻找
+set tags=tags; 
+set tags+=/root/.vim/systags
+set path+=/usr/include,/usr/include/x86_64-linux-gnu/,/usr/local/include/,/root/dp/wes1.1/common/
 
-set path+=/usr/include,/usr/include/x86_64-linux-gnu/,/usr/local/include/,/root/wes1.1/common/
+map <F5> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR><CR> :TlistUpdate<CR>
+imap <F5> <ESC>:!ctags -R  --c++-kinds=+p --fields=+iaS --extra=+q .<CR><CR> :TlistUpdate<CR>
 
-"cscope
+"=============== Cscope======================================== 
 if has("cscope")
-	set csprg=/usr/bin/cscope
-	set csto=1 "default 0
-	set cst " ues cstag instead of tag
-	"set nocst 
+	set csprg=/usr/bin/cscope " 指定用来执行cscope的命令
+	set csto=0 " 设置cstag命令查找次序：0先找cscope数据库再找标签文件；1先找标签文件再找cscope数据库
+	set cst " 同时搜索cscope数据库和标签文件
+	set cscopequickfix=s-,c-,d-,i-,t-,e- " 使用QuickFix窗口来显示cscope查找结果
 	set nocsverb
-	" add any database in current directory
-	if filereadable("cscope.out")
-	    cs add cscope.out
-	" else add database pointed to by environment
-	elseif $CSCOPE_DB != ""
-	    cs add $CSCOPE_DB
+	if filereadable("cscope.out") " 若当前目录下存在cscope数据库，添加该数据库到vim
+		cs add cscope.out
+	elseif $CSCOPE_DB != "" " 否则只要环境变量CSCOPE_DB不为空，则添加其指定的数据库到vim
+		cs add $CSCOPE_DB
 	endif
 	set csverb
 endif
 
-"cscope设置
-set cscopequickfix=s-,c-,d-,i-,t-,e-
+map <F4> :cs add ./cscope.out .<CR><CR><CR> :cs reset<CR>
+imap <F4> <ESC>:cs add ./cscope.out .<CR><CR><CR> :cs reset<CR>
 
+" 将:cs find c等Cscope查找命令映射为<C-_>c等快捷键（按法是先按Ctrl+Shift+-, 然后很快再按下c）
+nmap <C-_>s :cs find s <C-R>=expand("<cword>")<CR><CR> :copen<CR><CR>
+nmap <C-_>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+nmap <C-_>d :cs find d <C-R>=expand("<cword>")<CR><CR> :copen<CR><CR>
+nmap <C-_>c :cs find c <C-R>=expand("<cword>")<CR><CR> :copen<CR><CR>
+nmap <C-_>t :cs find t <C-R>=expand("<cword>")<CR><CR> :copen<CR><CR>
+nmap <C-_>e :cs find e <C-R>=expand("<cword>")<CR><CR> :copen<CR><CR>
+nmap <C-_>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+nmap <C-_>i :cs find i <C-R>=expand("<cfile>")<CR><CR> :copen<CR><CR>
 
 "Ignore compiled files
 set wildignore=*.o,*~,*.pyc,.git/*,.hg/*,.svn/*
@@ -152,6 +149,21 @@ nmap <leader><leader>t :vert scs find t <C-R>=expand("<cword>")<CR><CR>
 nmap <leader><leader>e :vert scs find e <C-R>=expand("<cword>")<CR><CR>
 nmap <leader><leader>i :vert scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
 nmap <leader><leader>d :vert scs find d <C-R>=expand("<cword>")<CR><CR>
+
+"=========== QuickFix ============================== 
+" 按下F6，执行make clean
+map <F6> :make clean<CR><CR><CR>
+" 按下F7，执行make编译程序，并打开quickfix窗口，显示编译信息
+map <F7> :make<CR><CR><CR> :copen<CR><CR>
+" 按下F8，光标移到上一个错误所在的行
+map <F8> :cp<CR>
+" 按下F9，光标移到下一个错误所在的行
+map <F9> :cn<CR>
+" 以下的映射是使上面的快捷键在插入模式下也能用
+imap <F6> <ESC>:make clean<CR><CR><CR>
+imap <F7> <ESC>:make<CR><CR><CR> :copen<CR><CR>
+imap <F8> <ESC>:cp<CR>
+imap <F9> <ESC>:cn<CR>
 
 "=====================The-NERD-Commenter=================================
 "快速批量注释,方便好用 The-NERD-Commenter
@@ -174,12 +186,14 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 "=====================taglist.vim========================================
 "<leader>tl 打开taglist窗口
 nmap <leader>tl :Tlist<CR><c-l>                
-let Tlist_Show_One_File        = 1             " 只显示当前文件的tags
-let Tlist_Exit_OnlyWindow      = 1             " 如果Taglist窗口是最后一个窗口则退出Vim
+let Tlist_Ctags_Cmd="ctags"
+let Tlist_Show_One_File        = 0             " 只显示当前文件的tags
+let Tlist_File_Fold_Auto_Close = 1             " 非当前文件，自动折叠
 let Tlist_Use_Right_Window     = 1             " 在右侧窗口中显示
-let Tlist_File_Fold_Auto_Close = 1             " 自动折叠
 let Tlist_Sort_Type = "name"                  "tems in tags sorted by name 
-let Tlist_Ctags_Cmd="/usr/bin/ctags"
+let Tlist_Exit_OnlyWindow      = 1             " 如果Taglist窗口是最后一个窗口则退出Vim
+let Tlist_Process_File_Always  = 1             "实时更新tags
+let Tlist_Inc_Winwidth = 0                     "terminal/console mode
 
 "=====================Tagbar========================================
 "<leader>tb 打开tagbar窗口
@@ -202,32 +216,61 @@ let g:tagbar_autofocus = 1
 ":AS 横向切割窗口,打开对应的源文件/头文件
 
 "=====================ShowMarks========================================
- let showmarks_enable = 1
- " Show which marks
- let showmarks_include = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
- " Ignore help, quickfix, non-modifiable buffers
- let showmarks_ignore_type = "hqm"
- " Hilight lower & upper marks
- let showmarks_hlline_lower = 1
- let showmarks_hlline_upper = 1 
+let showmarks_enable = 1
+" Show which marks
+let showmarks_include = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+" Ignore help, quickfix, non-modifiable buffers
+let showmarks_ignore_type = "hqm"
+" Hilight lower & upper marks
+let showmarks_hlline_lower = 1
+let showmarks_hlline_upper = 1 
 
- hi ShowMarksHLl ctermbg=Yellow   ctermfg=Black  guibg=#FFDB72    guifg=Black
- hi ShowMarksHLu ctermbg=Magenta  ctermfg=Black  guibg=#FFB3FF    guifg=Black 
+hi ShowMarksHLl ctermbg=Yellow   ctermfg=Black  guibg=#FFDB72    guifg=Black
+hi ShowMarksHLu ctermbg=Magenta  ctermfg=Black  guibg=#FFB3FF    guifg=Black 
 
 "=====================EasyMotion========================================
 "快速移动 EasyMotion
 "help easymotion <leader><leader> w
 
+"=====================minibufexpl.vim========================================
+let g:miniBufExplMapWindowNavVim = 1 " 按下Ctrl+h/j/k/l，可以切换到当前窗口的上下左右窗口
+let g:miniBufExplMapWindowNavArrows = 1 " 按下Ctrl+箭头，可以切换到当前窗口的上下左右窗口
+let g:miniBufExplMapCTabSwitchBufs = 1 " 启用以下两个功能：Ctrl+tab移到下一个buffer并在当前窗口打开；Ctrl+Shift+tab移到上一个buffer并在当前窗口打开；ubuntu好像不支持
+let g:miniBufExplMapCTabSwitchWindows = 1 " 启用以下两个功能：Ctrl+tab移到下一个窗口；Ctrl+Shift+tab移到上一个窗口；ubuntu好像不支持
+let g:miniBufExplModSelTarget = 1 " 不要在不可编辑内容的窗口（如TagList窗口）中打开选中的buffer
+
+"=====================echofunc.vim========================================
+let g:EchoFuncShowOnStatus = 1
 
 "=====================winmanager========================================
 "winmanager
-let g:winManagerWindowLayout='FileExplorer,BufExplorer|TagList'
+let g:winManagerWindowLayout='FileExplorer|TagList'
+let g:persistentBehaviour=0 "所有编辑文件都关闭，退出vim
 "设置宽度，默认为25
-let g:winManagerHigh = 30
+"let g:winManagerHigh = 50
 "在进入vim时自动打开winmanager
 "let g:AutoOpenWinManager = 1
 "快捷键打开WinManager
-nmap wm :WMToggle<cr>
+nmap <leader>wm :WMToggle<cr>
+
+
+"=======omnicppcomplete==================================================
+" 按下F3自动补全代码，注意该映射语句后不能有其他字符，包括tab；否则按下F3会自动补全一些乱码
+imap <F3> <C-X><C-O>
+" 按下F2根据头文件内关键字补全
+imap <F2> <C-X><C-I>
+set completeopt=menu,menuone " 关掉智能补全时的预览窗口
+let OmniCpp_MayCompleteDot = 1 " autocomplete with .
+let OmniCpp_MayCompleteArrow = 1 " autocomplete with ->
+let OmniCpp_MayCompleteScope = 1 " autocomplete with ::
+let OmniCpp_SelectFirstItem = 2 " select first item (but don't insert)
+let OmniCpp_NamespaceSearch = 2 " search namespaces in this and included files
+let OmniCpp_ShowPrototypeInAbbr = 1 " show function prototype in popup window
+let OmniCpp_GlobalScopeSearch=1 " enable the global scope search
+let OmniCpp_DisplayMode=1 " Class scope completion mode: always show all members
+"let OmniCpp_DefaultNamespaces=["std"]
+let OmniCpp_ShowScopeInAbbr=1 " show scope in abbreviation and remove the last column
+let OmniCpp_ShowAccess=1
 
 "=====================general========================================
 "打开man手册，分割窗口 <leader>K
@@ -264,6 +307,7 @@ set ruler
 
 "show (partial) command keys in the status line
 set showcmd
+
 
 "Height of the command bar
 set cmdheight=2
@@ -325,7 +369,7 @@ set scrolloff=3
 " Always show the status line
 set laststatus=2
 "set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}:%{&fenc!=''?&fenc:&enc}]\ [TYPE=%Y]\ [ROW=%03l/%L(%p%%)]\ [COL=%03v]
-set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")}
+set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")}\ %{EchoFuncGetStatusLine()} 
 
 
 "Set utf8 as standard encoding 
@@ -379,11 +423,11 @@ map <C-l> <C-W>l
 
 set foldenable           " enable folden
 set foldmethod=manual    " manual : Folds are created manually.
-                         " indent : Lines with equal indent form a fold.
-                         " expr   : ‘foldexpr’ gives the fold level of a line.
-                         " marker : Markers are used to specify folds.
-                         " syntax : Syntax highlighting items specify folds.
-                         " diff   : Fold text that is not changed.
+" indent : Lines with equal indent form a fold.
+" expr   : ‘foldexpr’ gives the fold level of a line.
+" marker : Markers are used to specify folds.
+" syntax : Syntax highlighting items specify folds.
+" diff   : Fold text that is not changed.
 "set foldclose=all
 " use space to folden
 nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
@@ -402,9 +446,9 @@ map <leader>cd :cd %:p:h<cr>:pwd<cr>
 
 " Return to last edit position when opening files (You want this!)
 autocmd BufReadPost *
-     \ if line("'\"") > 0 && line("'\"") <= line("$") |
-     \   exe "normal! g`\"" |
-     \ endif
+			\ if line("'\"") > 0 && line("'\"") <= line("$") |
+			\   exe "normal! g`\"" |
+			\ endif
 
 " Remember info about open buffers on close
 set viminfo^=%
