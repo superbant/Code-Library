@@ -17,6 +17,7 @@ Plugin 'VundleVim/Vundle.vim'
 
 "plugin on GitHub repo
 "Plugin 'tpope/vim-fugitive'
+Plugin 'easymotion/vim-easymotion'
 
 " plugin from http://vim-scripts.org/vim/scripts.html
 "Plugin 'L9'
@@ -29,7 +30,6 @@ Plugin 'a.vim'
 Plugin 'winmanager'
 Plugin 'OmniCppComplete'
 Plugin 'echofunc.vim'
-Plugin 'minibufexpl.vim'
 
 " Git plugin not hosted on GitHub
 "Plugin 'git://git.wincent.com/command-t.git'
@@ -117,19 +117,6 @@ if has("cscope")
 	set csverb
 endif
 
-map <F4> :cs add ./cscope.out .<CR><CR><CR> :cs reset<CR>
-imap <F4> <ESC>:cs add ./cscope.out .<CR><CR><CR> :cs reset<CR>
-
-" 将:cs find c等Cscope查找命令映射为<C-_>c等快捷键（按法是先按Ctrl+Shift+-, 然后很快再按下c）
-nmap <C-_>s :cs find s <C-R>=expand("<cword>")<CR><CR> :copen<CR><CR>
-nmap <C-_>g :cs find g <C-R>=expand("<cword>")<CR><CR>
-nmap <C-_>d :cs find d <C-R>=expand("<cword>")<CR><CR> :copen<CR><CR>
-nmap <C-_>c :cs find c <C-R>=expand("<cword>")<CR><CR> :copen<CR><CR>
-nmap <C-_>t :cs find t <C-R>=expand("<cword>")<CR><CR> :copen<CR><CR>
-nmap <C-_>e :cs find e <C-R>=expand("<cword>")<CR><CR> :copen<CR><CR>
-nmap <C-_>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
-nmap <C-_>i :cs find i <C-R>=expand("<cfile>")<CR><CR> :copen<CR><CR>
-
 "Ignore compiled files
 set wildignore=*.o,*~,*.pyc,.git/*,.hg/*,.svn/*
 
@@ -139,7 +126,7 @@ nmap <leader>c :scs find c <C-R>=expand("<cword>")<CR><CR>
 nmap <leader>t :scs find t <C-R>=expand("<cword>")<CR><CR>
 nmap <leader>e :scs find e <C-R>=expand("<cword>")<CR><CR>
 nmap <leader>f :scs find f <C-R>=expand("<cfile>")<CR><CR>
-nmap <leader>i :scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+nmap <leader>i :scs find i <C-R>=expand("<cfile>")<CR><CR>
 nmap <leader>d :scs find d <C-R>=expand("<cword>")<CR><CR>
 
 nmap <leader><leader>s :vert scs find s <C-R>=expand("<cword>")<CR><CR>
@@ -147,7 +134,7 @@ nmap <leader><leader>g :vert scs find g <C-R>=expand("<cword>")<CR><CR>
 nmap <leader><leader>c :vert scs find c <C-R>=expand("<cword>")<CR><CR>
 nmap <leader><leader>t :vert scs find t <C-R>=expand("<cword>")<CR><CR>
 nmap <leader><leader>e :vert scs find e <C-R>=expand("<cword>")<CR><CR>
-nmap <leader><leader>i :vert scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+nmap <leader><leader>i :vert scs find i <C-R>=expand("<cfile>")<CR><CR>
 nmap <leader><leader>d :vert scs find d <C-R>=expand("<cword>")<CR><CR>
 
 "=========== QuickFix ============================== 
@@ -231,13 +218,6 @@ hi ShowMarksHLu ctermbg=Magenta  ctermfg=Black  guibg=#FFB3FF    guifg=Black
 "=====================EasyMotion========================================
 "快速移动 EasyMotion
 "help easymotion <leader><leader> w
-
-"=====================minibufexpl.vim========================================
-let g:miniBufExplMapWindowNavVim = 1 " 按下Ctrl+h/j/k/l，可以切换到当前窗口的上下左右窗口
-let g:miniBufExplMapWindowNavArrows = 1 " 按下Ctrl+箭头，可以切换到当前窗口的上下左右窗口
-let g:miniBufExplMapCTabSwitchBufs = 1 " 启用以下两个功能：Ctrl+tab移到下一个buffer并在当前窗口打开；Ctrl+Shift+tab移到上一个buffer并在当前窗口打开；ubuntu好像不支持
-let g:miniBufExplMapCTabSwitchWindows = 1 " 启用以下两个功能：Ctrl+tab移到下一个窗口；Ctrl+Shift+tab移到上一个窗口；ubuntu好像不支持
-let g:miniBufExplModSelTarget = 1 " 不要在不可编辑内容的窗口（如TagList窗口）中打开选中的buffer
 
 "=====================echofunc.vim========================================
 let g:EchoFuncShowOnStatus = 1
