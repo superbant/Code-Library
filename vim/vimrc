@@ -32,10 +32,11 @@ Plugin 'winmanager'
 Plugin 'OmniCppComplete'
 Plugin 'echofunc.vim'
 Plugin 'Lokaltog/vim-powerline'
-Plugin 'vim-syntastic/syntastic'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'TaskList.vim'
+"Plugin 'TaskList.vim'
 Plugin 'godlygeek/tabular'
+"Plugin 'vim-syntastic/syntastic'
+"YouCompleteMe 实现了syntastic相同的功能，并且两者有冲突，建议启动其中一个
+Plugin 'Valloric/YouCompleteMe'
 
 " Git plugin not hosted on GitHub
 "Plugin 'git://git.wincent.com/command-t.git'
@@ -80,16 +81,15 @@ let g:mapleader = ","
 command W w !sudo tee % > /dev/null
 
 "=====================colors=================================
+" 配色方案 
+set t_Co=256
 " Switch syntax highlighting on, when the terminal has colors
 if has("gui_running") && !exists("syntax_on")
   syntax on
 endif
 
-"Enable syntax highlighting
+" Enable syntax highlighting
 syntax enable 
-
-" 配色方案 
-set t_Co=256
 
 colorscheme molokai 
 highlight NonText guibg=#060606
@@ -157,11 +157,6 @@ map <F7> :make<CR><CR><CR> :copen<CR><CR>
 map <F8> :cp<CR>
 " 按下F9，光标移到下一个错误所在的行
 map <F9> :cn<CR>
-" 以下的映射是使上面的快捷键在插入模式下也能用
-imap <F6> <ESC>:make clean<CR><CR><CR>
-imap <F7> <ESC>:make<CR><CR><CR> :copen<CR><CR>
-imap <F8> <ESC>:cp<CR>
-imap <F9> <ESC>:cn<CR>
 
 "=====================The-NERD-Commenter=================================
 "快速批量注释,方便好用 The-NERD-Commenter
@@ -170,8 +165,6 @@ imap <F9> <ESC>:cn<CR>
 
 "=====================The-NERD-tree=================================
 nmap <leader>nt :NERDTree<cr>:set rnu<cr>
-" Automatically open a NERDTree if no files where specified
-autocmd vimenter * if !argc() | NERDTree | endif
 let NERDChristmasTree=0
 let NERDTreeChDirMode=2
 let NERDTreeWinSize=35
@@ -182,6 +175,8 @@ let NERDTreeShowLineNumbers=1
 let NERDTreeHighlightCursorline=1
 let NERDTreeWinPos="left"
 let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.obj$', '\.o$', '\.so$', '\.egg$', '^\.git$', '^\.svn$', '^\.hg$', '\~$', '\.swp$']
+" Automatically open a NERDTree if no files where specified
+autocmd vimenter * if !argc() | NERDTree | endif
 "close vim if the only window left open is a NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | end
 
@@ -201,8 +196,8 @@ let Tlist_Inc_Winwidth = 0                     "terminal/console mode
 "=====================Tagbar========================================
 "<leader>tb 打开tagbar窗口
 nmap <leader>tb :TagbarToggle<CR>  
+let g:tarbar_width=35
 let g:tagbar_autofocus = 1
-let g:tagbar_width=35
 
 "=====================c.vim========================================
 "\if      添加函数
@@ -319,7 +314,6 @@ set ruler
 "show (partial) command keys in the status line
 set showcmd
 
-
 "Height of the command bar
 set cmdheight=2
 
@@ -379,8 +373,7 @@ set scrolloff=3
 
 " Always show the status line
 set laststatus=2
-set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}:%{&fenc!=''?&fenc:&enc}]\ [TYPE=%Y]\ [ROW=%03l/%L(%p%%)]\ [COL=%03v]
-
+"set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}:%{&fenc!=''?&fenc:&enc}]\ [TYPE=%Y]\ [ROW=%03l/%L(%p%%)]\ [COL=%03v]
 
 "Set utf8 as standard encoding 
 "en_US as the standard language
@@ -426,19 +419,20 @@ map k gk
 map <silent> <leader><cr> :noh<cr>
 
 " Smart way to move between windows
-nnoremap <C-j> <C-W>j
-nnoremap <C-k> <C-W>k
-nnoremap <C-h> <C-W>h
-nnoremap <C-l> <C-W>l
+noremap <C-j> <C-W>j
+noremap <C-k> <C-W>k
+noremap <C-h> <C-W>h
+noremap <C-l> <C-W>l
 
 set foldenable           " enable folden
 set foldmethod=manual    " manual : Folds are created manually.
-" indent : Lines with equal indent form a fold.
-" expr   : ‘foldexpr’ gives the fold level of a line.
-" marker : Markers are used to specify folds.
-" syntax : Syntax highlighting items specify folds.
-" diff   : Fold text that is not changed.
+                         " indent : Lines with equal indent form a fold.
+                         " expr   : ‘foldexpr’ gives the fold level of a line.
+                         " marker : Markers are used to specify folds.
+                         " syntax : Syntax highlighting items specify folds.
+                         " diff   : Fold text that is not changed.
 "set foldclose=all
+
 " use space to folden
 nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
 
