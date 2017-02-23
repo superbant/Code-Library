@@ -37,7 +37,7 @@ Plugin 'Lokaltog/vim-powerline'
 Plugin 'godlygeek/tabular'
 "Plugin 'vim-syntastic/syntastic'
 "YouCompleteMe 实现了syntastic相同的功能，并且两者有冲突，建议启动其中一个
-Plugin 'Valloric/YouCompleteMe'
+"Plugin 'Valloric/YouCompleteMe'
 
 " Git plugin not hosted on GitHub
 "Plugin 'git://git.wincent.com/command-t.git'
