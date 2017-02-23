@@ -28,6 +28,7 @@ Plugin 'Tagbar'
 Plugin 'ctrlp.vim'
 Plugin 'c.vim'
 Plugin 'a.vim'
+Plugin 'bufexplorer.zip'
 Plugin 'winmanager'
 Plugin 'OmniCppComplete'
 Plugin 'echofunc.vim'
@@ -250,7 +251,7 @@ let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 
 "=====================winmanager========================================
 "winmanager
-let g:winManagerWindowLayout='FileExplorer|TagList'
+let g:winManagerWindowLayout="TagList,FileExplorer|BufExplorer" "'FileExplorer|TagList'
 let g:persistentBehaviour=0 "所有编辑文件都关闭，退出vim
 "设置宽度，默认为25
 "let g:winManagerHigh = 50
