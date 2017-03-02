@@ -109,7 +109,7 @@ highlight Comment ctermfg=blue guifg=blue
 "//;不可省略 表示当前目录不存在tags，则在父目录中寻找
 set tags=tags; 
 set tags+=/root/.vim/systags
-set path+=/usr/include,/usr/include/x86_64-linux-gnu/,/usr/local/include/,/root/dp/wes1.1/common/
+set path+=/usr/include,/usr/local/include,/usr/include/x86_64-linux-gnu
 
 map <F5> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR><CR> :TlistUpdate<CR>
 imap <F5> <ESC>:!ctags -R  --c++-kinds=+p --fields=+iaS --extra=+q .<CR><CR> :TlistUpdate<CR>
