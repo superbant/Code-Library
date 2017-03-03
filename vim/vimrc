@@ -32,11 +32,8 @@ Plugin 'bufexplorer.zip'
 Plugin 'winmanager'
 Plugin 'OmniCppComplete'
 Plugin 'echofunc.vim'
-Plugin 'Lokaltog/vim-powerline'
 "Plugin 'TaskList.vim'
-Plugin 'godlygeek/tabular'
-"Plugin 'vim-syntastic/syntastic'
-"YouCompleteMe 实现了syntastic相同的功能，并且两者有冲突，建议启动其中一个
+"Plugin 'godlygeek/tabular'
 "Plugin 'Valloric/YouCompleteMe'
 
 " Git plugin not hosted on GitHub
@@ -68,225 +65,26 @@ filetype plugin indent on    " required
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
 "
-"
-"=====================Global ========================================
-"
-
+"=====================general========================================
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
 let mapleader = ","
 let g:mapleader = ","
 
-" :W sudo saves the file 
-" (useful for handling the permission-denied error)
-command W w !sudo tee % > /dev/null
-
-"=====================colors=================================
 " 配色方案 
 set t_Co=256
 " Switch syntax highlighting on, when the terminal has colors
-if has("gui_running") && !exists("syntax_on")
-  syntax on
-endif
-
-" Enable syntax highlighting
-syntax enable 
+syntax enable
 
 colorscheme molokai 
-highlight NonText guibg=#060606
-highlight Folded  guibg=#0A0A0A guifg=#9090D0
 
-"修改注释颜色
-highlight Comment ctermfg=blue guifg=blue
-
-"=====================tags=================================
-"ctags -I __THROW -I __attribute_pure__ -I __nonnull -I __attribute__ --file-scope=yes  --languages=c,c++ --links=yes --c++-kinds=+p --fields=+ialS --extra=+q -R -f ~/.vim/systags /usr/include /usr/local/include
-
-"ctags -I __THROW -I __attribute_pure__ -I __nonnull -I __attribute__ --file-scope=yes  --languages=c,c++ --links=yes --c++-kinds=+p --fields=+ialS --extra=+q -f ~/.vim/systags /usr/include/* /usr/include/sys/* /usr/include/bits/* /usr/include/netinet/* /usr/include/arpa/* /usr/include/mysql/* /usr/include/x86_64-linux-gnu/*
-"ctags -I __THROW -I __attribute_pure__ -I __nonnull -I __attribute__ --file-scope=yes  --languages=c,c++ --links=yes --c++-kinds=+p --fields=+ialS --extra=+q -R
-
-"ctags
-"//;不可省略 表示当前目录不存在tags，则在父目录中寻找
-set tags=tags; 
-set tags+=/root/.vim/systags
-set path+=/usr/include,/usr/local/include,/usr/include/x86_64-linux-gnu
-
-map <F5> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR><CR> :TlistUpdate<CR>
-imap <F5> <ESC>:!ctags -R  --c++-kinds=+p --fields=+iaS --extra=+q .<CR><CR> :TlistUpdate<CR>
-
-"=============== Cscope======================================== 
-if has("cscope")
-	set csprg=/usr/bin/cscope " 指定用来执行cscope的命令
-	set csto=0 " 设置cstag命令查找次序：0先找cscope数据库再找标签文件；1先找标签文件再找cscope数据库
-	set cst " 同时搜索cscope数据库和标签文件
-	set cscopequickfix=s-,c-,d-,i-,t-,e- " 使用QuickFix窗口来显示cscope查找结果
-	set nocsverb
-	if filereadable("cscope.out") " 若当前目录下存在cscope数据库，添加该数据库到vim
-		cs add cscope.out
-	elseif $CSCOPE_DB != "" " 否则只要环境变量CSCOPE_DB不为空，则添加其指定的数据库到vim
-		cs add $CSCOPE_DB
-	endif
-	set csverb
-endif
-
-"Ignore compiled files
-set wildignore=*.o,*~,*.pyc,.git/*,.hg/*,.svn/*
-
-nmap <leader>s :scs find s <C-R>=expand("<cword>")<CR><CR>
-nmap <leader>g :scs find g <C-R>=expand("<cword>")<CR><CR>
-nmap <leader>c :scs find c <C-R>=expand("<cword>")<CR><CR>
-nmap <leader>t :scs find t <C-R>=expand("<cword>")<CR><CR>
-nmap <leader>e :scs find e <C-R>=expand("<cword>")<CR><CR>
-nmap <leader>f :scs find f <C-R>=expand("<cfile>")<CR><CR>
-nmap <leader>i :scs find i <C-R>=expand("<cfile>")<CR><CR>
-nmap <leader>d :scs find d <C-R>=expand("<cword>")<CR><CR>
-
-nmap <leader><leader>s :vert scs find s <C-R>=expand("<cword>")<CR><CR>
-nmap <leader><leader>g :vert scs find g <C-R>=expand("<cword>")<CR><CR>
-nmap <leader><leader>c :vert scs find c <C-R>=expand("<cword>")<CR><CR>
-nmap <leader><leader>t :vert scs find t <C-R>=expand("<cword>")<CR><CR>
-nmap <leader><leader>e :vert scs find e <C-R>=expand("<cword>")<CR><CR>
-nmap <leader><leader>i :vert scs find i <C-R>=expand("<cfile>")<CR><CR>
-nmap <leader><leader>d :vert scs find d <C-R>=expand("<cword>")<CR><CR>
-
-"=========== QuickFix ============================== 
-" 按下F6，执行make clean
-map <F6> :make clean<CR><CR><CR>
-" 按下F7，执行make编译程序，并打开quickfix窗口，显示编译信息
-map <F7> :make<CR><CR><CR> :copen<CR><CR>
-" 按下F8，光标移到上一个错误所在的行
-map <F8> :cp<CR>
-" 按下F9，光标移到下一个错误所在的行
-map <F9> :cn<CR>
-
-"=====================The-NERD-Commenter=================================
-"快速批量注释,方便好用 The-NERD-Commenter
-"<leader>cc 注释当前选中文本
-"<leader>cu 取消选中文本块的注释。
-
-"=====================The-NERD-tree=================================
-nmap <leader>nt :NERDTree<cr>:set rnu<cr>
-let NERDChristmasTree=0
-let NERDTreeChDirMode=2
-let NERDTreeWinSize=35
-let NERDTreeShowBookmarks=1
-let NERDTreeShowFiles=1
-let NERDTreeShowHidden=1
-let NERDTreeShowLineNumbers=1
-let NERDTreeHighlightCursorline=1
-let NERDTreeWinPos="left"
-let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.obj$', '\.o$', '\.so$', '\.egg$', '^\.git$', '^\.svn$', '^\.hg$', '\~$', '\.swp$']
-" Automatically open a NERDTree if no files where specified
-autocmd vimenter * if !argc() | NERDTree | endif
-"close vim if the only window left open is a NERDTree
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | end
-
-
-"=====================taglist.vim========================================
-"<leader>tl 打开taglist窗口
-nmap <leader>tl :Tlist<CR><c-l>                
-let Tlist_Ctags_Cmd="ctags"
-let Tlist_Show_One_File        = 1             " 只显示当前文件的tags
-let Tlist_File_Fold_Auto_Close = 1             " 非当前文件，自动折叠
-let Tlist_Use_Right_Window     = 1             " 在右侧窗口中显示
-let Tlist_Sort_Type = "name"                  "tems in tags sorted by name 
-let Tlist_Exit_OnlyWindow      = 1             " 如果Taglist窗口是最后一个窗口则退出Vim
-let Tlist_Process_File_Always  = 1             "实时更新tags
-let Tlist_Inc_Winwidth = 0                     "terminal/console mode
-
-"=====================Tagbar========================================
-"<leader>tb 打开tagbar窗口
-nmap <leader>tb :TagbarToggle<CR>  
-let g:tarbar_width=35
-let g:tagbar_autofocus = 1
-
-"=====================c.vim========================================
-"\if      添加函数
-"\im    添加主函数
-"\cfu   添加 一筐 注释
-"\p<   添加 include
-"\p"    添加 include
-"\nr    插入一段 代码片段， 该代码片段在~/.vim/c-support/codesnippets
-
-
-"=====================a.vim========================================
-"切换源文件头文件 a.vim
-":A 在同一tab切换源文件/头文件
-":AV 竖向切割窗口,打开对应的源文件/头文件
-":AS 横向切割窗口,打开对应的源文件/头文件
-
-"=====================ShowMarks========================================
-let showmarks_enable = 1
-" Show which marks
-let showmarks_include = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-" Ignore help, quickfix, non-modifiable buffers
-let showmarks_ignore_type = "hqm"
-" Hilight lower & upper marks
-let showmarks_hlline_lower = 1
-let showmarks_hlline_upper = 1 
-
-hi ShowMarksHLl ctermbg=Yellow   ctermfg=Black  guibg=#FFDB72    guifg=Black
-hi ShowMarksHLu ctermbg=Magenta  ctermfg=Black  guibg=#FFB3FF    guifg=Black 
-
-"=====================EasyMotion========================================
-"快速移动 EasyMotion
-"help easymotion <leader><leader> w
-
-"=====================echofunc.vim========================================
-"let g:EchoFuncShowOnStatus = 1
-
-"=====================syntastic========================================
-let g:syntastic_check_on_open=1
-let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_wq = 0
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-"=====================ctrlp.vim========================================
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.png,*.jpg,*.jpeg,*.gif " MacOSX/Linux
-let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
-
-"=====================winmanager========================================
-"winmanager
-let g:winManagerWindowLayout="TagList,FileExplorer|BufExplorer" "'FileExplorer|TagList'
-let g:persistentBehaviour=0 "所有编辑文件都关闭，退出vim
-"设置宽度，默认为25
-"let g:winManagerHigh = 50
-"在进入vim时自动打开winmanager
-"let g:AutoOpenWinManager = 1
-"快捷键打开WinManager
-nmap <leader>wm :WMToggle<cr>
-
-
-"=======omnicppcomplete==================================================
-" 按下F3自动补全代码，注意该映射语句后不能有其他字符，包括tab；否则按下F3会自动补全一些乱码
-imap <F3> <C-X><C-O>
-" 按下F2根据头文件内关键字补全
-imap <F2> <C-X><C-I>
-set completeopt=menu,menuone " 关掉智能补全时的预览窗口
-let OmniCpp_MayCompleteDot = 1 " autocomplete with .
-let OmniCpp_MayCompleteArrow = 1 " autocomplete with ->
-let OmniCpp_MayCompleteScope = 1 " autocomplete with ::
-let OmniCpp_SelectFirstItem = 2 " select first item (but don't insert)
-let OmniCpp_NamespaceSearch = 2 " search namespaces in this and included files
-let OmniCpp_ShowPrototypeInAbbr = 1 " show function prototype in popup window
-let OmniCpp_GlobalScopeSearch=1 " enable the global scope search
-let OmniCpp_DisplayMode=1 " Class scope completion mode: always show all members
-"let OmniCpp_DefaultNamespaces=["std"]
-let OmniCpp_ShowScopeInAbbr=1 " show scope in abbreviation and remove the last column
-let OmniCpp_ShowAccess=1
-
-"=====================general========================================
 "打开man手册，分割窗口 <leader>K
 runtime! ftplugin/man.vim
 
 "允许未保存切换buffer 隐藏buff
 set hidden
 
-"可以在buffer的任何地方使用鼠标（类似office中在工作区双击鼠标定位）
+"可以在buffer的任何地方使用鼠标
 "set mouse=a
 "set selection=exclusive
 "set selectmode=mouse,key 
@@ -463,3 +261,172 @@ noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
 
 " Toggle paste mode on and off
 map <leader>pp :setlocal paste!<cr>
+
+" :W sudo saves the file 
+" (useful for handling the permission-denied error)
+command W w !sudo tee % > /dev/null
+
+"=====================tags=================================
+"ctags -I __THROW -I __attribute_pure__ -I __nonnull -I __attribute__ --file-scope=yes  --languages=c,c++ --links=yes --c++-kinds=+p --fields=+ialS --extra=+q -R -f ~/.vim/systags /usr/include /usr/local/include
+
+"ctags -I __THROW -I __attribute_pure__ -I __nonnull -I __attribute__ --file-scope=yes  --languages=c,c++ --links=yes --c++-kinds=+p --fields=+ialS --extra=+q -f ~/.vim/systags /usr/include/* /usr/include/sys/* /usr/include/bits/* /usr/include/netinet/* /usr/include/arpa/* /usr/include/mysql/* /usr/include/x86_64-linux-gnu/*
+
+"ctags
+"//;不可省略 表示当前目录不存在tags，则在父目录中寻找
+set tags=tags; 
+set tags+=/root/.vim/systags
+set path+=/usr/include,/usr/local/include,/usr/include/x86_64-linux-gnu
+
+"=============== Cscope======================================== 
+if has("cscope")
+	set csprg=/usr/bin/cscope " 指定用来执行cscope的命令
+	set csto=0 " 设置cstag命令查找次序：0先找cscope数据库再找标签文件；1先找标签文件再找cscope数据库
+	set cst " 同时搜索cscope数据库和标签文件
+	set cscopequickfix=s-,c-,d-,i-,t-,e- " 使用QuickFix窗口来显示cscope查找结果
+	set nocsverb
+	if filereadable("cscope.out") " 若当前目录下存在cscope数据库，添加该数据库到vim
+		cs add cscope.out
+	elseif $CSCOPE_DB != "" " 否则只要环境变量CSCOPE_DB不为空，则添加其指定的数据库到vim
+		cs add $CSCOPE_DB
+	endif
+	set csverb
+endif
+
+"Ignore compiled files
+
+nmap <leader>s :scs find s <C-R>=expand("<cword>")<CR><CR>
+nmap <leader>g :scs find g <C-R>=expand("<cword>")<CR><CR>
+nmap <leader>c :scs find c <C-R>=expand("<cword>")<CR><CR>
+nmap <leader>t :scs find t <C-R>=expand("<cword>")<CR><CR>
+nmap <leader>e :scs find e <C-R>=expand("<cword>")<CR><CR>
+nmap <leader>f :scs find f <C-R>=expand("<cfile>")<CR><CR>
+nmap <leader>i :scs find i <C-R>=expand("<cfile>")<CR><CR>
+nmap <leader>d :scs find d <C-R>=expand("<cword>")<CR><CR>
+
+nmap <leader><leader>s :vert scs find s <C-R>=expand("<cword>")<CR><CR>
+nmap <leader><leader>g :vert scs find g <C-R>=expand("<cword>")<CR><CR>
+nmap <leader><leader>c :vert scs find c <C-R>=expand("<cword>")<CR><CR>
+nmap <leader><leader>t :vert scs find t <C-R>=expand("<cword>")<CR><CR>
+nmap <leader><leader>e :vert scs find e <C-R>=expand("<cword>")<CR><CR>
+nmap <leader><leader>i :vert scs find i <C-R>=expand("<cfile>")<CR><CR>
+nmap <leader><leader>d :vert scs find d <C-R>=expand("<cword>")<CR><CR>
+
+"=========== QuickFix ============================== 
+" 按下F9，执行make clean
+map <F9> :make clean<CR><CR><CR>
+" 按下F10，执行make编译程序，并打开quickfix窗口，显示编译信息
+map <F10> :make<CR><CR><CR> :copen<CR><CR>
+" 按下F11，光标移到上一个错误所在的行
+map <F11> :cp<CR>
+" 按下F12，光标移到下一个错误所在的行
+map <F12> :cn<CR>
+
+"=====================The-NERD-Commenter=================================
+"快速批量注释,方便好用 The-NERD-Commenter
+"<leader>cc 注释当前选中文本
+"<leader>cu 取消选中文本块的注释。
+
+"=====================The-NERD-tree=================================
+nmap <leader>nt :NERDTree<cr>:set rnu<cr>
+let NERDTreeChDirMode=2
+let NERDTreeWinSize=35
+let NERDTreeShowBookmarks=1
+let NERDTreeShowFiles=1
+let NERDTreeShowHidden=1
+let NERDTreeShowLineNumbers=1
+let NERDTreeHighlightCursorline=1
+let NERDTreeWinPos="left"
+let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.obj$', '\.o$', '\.so$', '\.egg$', '^\.git$', '^\.svn$', '^\.hg$', '\~$', '\.swp$']
+" Automatically open a NERDTree if no files where specified
+autocmd vimenter * if !argc() | NERDTree | endif
+"close vim if the only window left open is a NERDTree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | end
+
+
+"=====================taglist.vim========================================
+"<leader>tl 打开taglist窗口
+nmap <leader>tl :Tlist<CR><c-l>                
+let Tlist_Ctags_Cmd="ctags"
+let Tlist_Show_One_File        = 1             " 只显示当前文件的tags
+let Tlist_File_Fold_Auto_Close = 1             " 非当前文件，自动折叠
+let Tlist_Use_Right_Window     = 1             " 在右侧窗口中显示
+let Tlist_Sort_Type = "name"                  "tems in tags sorted by name 
+let Tlist_Exit_OnlyWindow      = 1             " 如果Taglist窗口是最后一个窗口则退出Vim
+let Tlist_Process_File_Always  = 1             "实时更新tags
+let Tlist_Inc_Winwidth = 0                     "terminal/console mode
+
+"=====================Tagbar========================================
+"<leader>tb 打开tagbar窗口
+nmap <leader>tb :TagbarToggle<CR>  
+let g:tarbar_width=35
+let g:tagbar_autofocus = 1
+
+"=====================c.vim========================================
+"\if      添加函数
+"\im    添加主函数
+"\cfu   添加 一筐 注释
+"\p<   添加 include
+"\p"    添加 include
+"\nr    插入一段 代码片段， 该代码片段在~/.vim/c-support/codesnippets
+
+
+"=====================a.vim========================================
+"切换源文件头文件 a.vim
+":A 在同一tab切换源文件/头文件
+":AV 竖向切割窗口,打开对应的源文件/头文件
+":AS 横向切割窗口,打开对应的源文件/头文件
+
+"=====================EasyMotion========================================
+"快速移动 EasyMotion
+"help easymotion <leader><leader> w
+
+"=====================echofunc.vim========================================
+"let g:EchoFuncShowOnStatus = 1
+
+"=====================ctrlp.vim========================================
+set wildignore+=*.o,*~,*.pyc,.git/*,.hg/*,.svn/*
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.png,*.jpg,*.jpeg,*.gif " MacOSX/Linux
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+
+"=====================winmanager========================================
+"winmanager
+let g:winManagerWindowLayout="TagList,NERDTree,FileExplorer|BufExplorer" 
+let g:persistentBehaviour=0 "所有编辑文件都关闭，退出vim
+"设置宽度，默认为25
+"let g:winManagerHigh = 50
+"快捷键打开WinManager
+nmap <leader>wm :WMToggle<cr>
+
+"=======omnicppcomplete==================================================
+set completeopt=menu,menuone,longest  
+let OmniCpp_MayCompleteDot = 1 " autocomplete with .
+let OmniCpp_MayCompleteArrow = 1 " autocomplete with ->
+let OmniCpp_MayCompleteScope = 1 " autocomplete with ::
+let OmniCpp_SelectFirstItem = 2 " select first item (but don't insert)
+let OmniCpp_NamespaceSearch = 2 " search namespaces in this and included files
+let OmniCpp_ShowPrototypeInAbbr = 1 " show function prototype in popup window
+let OmniCpp_GlobalScopeSearch=1 " enable the global scope search
+let OmniCpp_DisplayMode=1 " Class scope completion mode: always show all members
+let OmniCpp_DefaultNamespaces=["std"]
+let OmniCpp_ShowScopeInAbbr=1 " show scope in abbreviation and remove the last column
+let OmniCpp_ShowAccess=1
+
+"*****************************************************  
+"           YouCompleteMe配置                        *  
+"*****************************************************  
+"配置默认的ycm_extra_conf.py  
+"let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'   
+   
+"按,jd 会跳转到定义  
+"nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>     
+   
+"打开vim时不再询问是否加载ycm_extra_conf.py配置  
+"let g:ycm_confirm_extra_conf=0     
+   
+"使用ctags生成的tags文件  
+"let g:ycm_collect_identifiers_from_tag_files = 1   
+
+"*****************************************************  
+"           Syntastic配置                            *  
+"*****************************************************  
+let g:Syntastic_check_on_open=1  
