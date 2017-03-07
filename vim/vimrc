@@ -429,6 +429,17 @@ let g:tagbar_autofocus = 1
 
 "*****************************************************  
 "                                                    *
+"       airline配置                                 *  
+"                                                    *
+"*****************************************************  
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_nr_show = 1
+let g:airline#extensions#whitespace#enabled = 0
+let g:airline#extensions#whitespace#symbol = '!'
+
+
+"*****************************************************  
+"                                                    *
 "       echofunc配置                                 *  
 "                                                    *
 "*****************************************************  
@@ -496,4 +507,3 @@ let OmniCpp_ShowAccess=1
 "                                                    *
 "*****************************************************  
 let g:Syntastic_check_on_open=1  
-let g:rehash256 = 1
