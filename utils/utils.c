@@ -3,7 +3,7 @@
  *
  *       Filename:  utils.c
  *
- *    Description:  工具库  
+ *    Description:  utils
  *
  *        Version:  1.0
  *        Created:  05/05/2016 07:53:09 AM
@@ -18,73 +18,60 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <errno.h>
-
-// read "n" bytes from a descriptor 
-ssize_t readn(int fd, void *ptr, size_t n)
+/* 
+ * block socket
+ * read "n" bytes from a descriptor  
+ * the number of bytes read is returned  
+ */
+ssize_t readn_block(int fd, void *vptr, size_t n)
 {
-    size_t nleft;
-    ssize_t nread;
+    size_t nleft = 0;
+    ssize_t nread = 0;
+    char *ptr = vptr;
 
     nleft = n;
+
     while(nleft > 0)
     {
-        if ((nread = read(fd, ptr, nleft)) < 0 )
+        if ((nread = read(fd, ptr, nleft)) <= 0 )
         {
-            if (nleft == n) 
-            {
-                return -1;  //error, return -1;
-            }
-            else
-            {
-                break; // error, return amount read so far
-            }
-        }
-        else if (nread == 0)
-        {
-            break; //EOF 
+            break;
         }
 
         nleft -= nread;
         ptr += nread;
     }
-    return (n - nleft); //return >=0
+    return (n - nleft); 
 }
 
-// write "n" bytes to a descriptor
-ssize_t writen(int fd, const void *ptr, size_t n)
+/*
+ * write "n" bytes to a descriptor 
+ * the number of bytes writen is returned   
+ */
+ssize_t writen_block(int fd, void *vptr, size_t n)
 {
-    size_t nleft;
-    ssize_t nwritten;  
+    size_t nleft = 0;
+    ssize_t nwritten = 0;  
+    char *ptr = vptr;
 
     nleft = n;
     while(nleft > 0)
     {
-        if ((nwritten = write(fd, ptr, nleft)) < 0 ) 
+        if ((nwritten = write(fd, ptr, nleft)) <= 0 ) 
         {
-            if (nleft == n) 
-            {
-                return -1; //error, return -1; 
-            }
-            else
-            {
-                break; // error, return amount written so far
-            }
+            break;
         }
-        else if (nwritten == 0)
-        {
-            break; 
-        }
-
         nleft -= nwritten;
         ptr += nwritten;
     }
-    return (n - nleft); // return >=0
+    return (n - nleft);
 }
 
-//循环从文件描述符读取N字节
-//-1:错误
-//小于n：读到EOF
-ssize_t readn_signal(int fd, void *vptr, size_t n)
+/*
+ * 循环从非阻塞文件描述符读取N字节
+ * 判断返回值是否等于n
+*/
+ssize_t readn_nonblock(int fd, void *vptr, size_t n)
 {
     size_t nleft;
     ssize_t nread;
@@ -95,7 +82,7 @@ ssize_t readn_signal(int fd, void *vptr, size_t n)
 
     while (nleft > 0) 
     {
-        if ((nread = read(fd, ptr, nleft)) < 0)
+        if ((nread = read(fd, ptr, nleft)) <= 0)
         {
             if (errno == EINTR || errno == EWOULDBLOCK || errno == EAGAIN)
             {
@@ -103,24 +90,20 @@ ssize_t readn_signal(int fd, void *vptr, size_t n)
             }
             else
             {
-                return -1; //错误，返回-1
-                //break;//error, return amount read so far
+                //nread = 0 : 对方套接字关闭
+                //nread < 0 : 套接字错误
+                break;
             }
-        }
-        else if (nread == 0)
-        {
-            return -1; //错误，返回-1 对方套接字关闭 
-            //break; //EOF, return amount written so far
         }
 
         nleft -= nread;
         ptr += nread;
     }
-    return n - nleft; //return >=0
+    return n - nleft; 
 }
 
 //循环往文件描述符fd写入N个字节, 返回值等于n表明写入成功，不等于n表明写入错误 
-ssize_t writen_signal(int fd, const void *vptr, size_t n) 
+ssize_t writen_nonblock(int fd, const void *vptr, size_t n) 
 {
     size_t nleft;
     ssize_t nwritten;
@@ -131,7 +114,7 @@ ssize_t writen_signal(int fd, const void *vptr, size_t n)
 
     while (nleft > 0)
     {
-        if ( (nwritten = write(fd, ptr, nleft)) < 0)
+        if ( (nwritten = write(fd, ptr, nleft)) <= 0)
         {
             if ((errno == EINTR || errno == EWOULDBLOCK || errno == EAGAIN))
             {
@@ -139,18 +122,14 @@ ssize_t writen_signal(int fd, const void *vptr, size_t n)
             }
             else
             {
-                return -1; //错误，返回-1 
-                //break; //error, return amount written so far
+                //nwritten= 0 : 对方套接字关闭
+                //nwritten< 0 : 套接字错误
+                break;
             }
-        }
-        else if (nwritten == 0)
-        {
-                return -1; //错误，返回-1 对方套接字关闭 
-                //break; //error, return amount written so far
         }
 
         nleft -= nwritten;
         ptr += nwritten;
     }
-    return n - nleft; // return >=0
+    return n - nleft; 
 }
