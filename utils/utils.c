@@ -16,6 +16,7 @@
  * =====================================================================================
  */
 #include <stdlib.h>
+#include <stdio.h>
 #include <unistd.h>
 #include <errno.h>
 /* 
@@ -35,6 +36,10 @@ ssize_t readn_block(int fd, void *vptr, size_t n)
     {
         if ((nread = read(fd, ptr, nleft)) <= 0 )
         {
+            if (nread < 0)
+            {
+                perror("read"); 
+            }
             break;
         }
 
@@ -59,6 +64,10 @@ ssize_t writen_block(int fd, void *vptr, size_t n)
     {
         if ((nwritten = write(fd, ptr, nleft)) <= 0 ) 
         {
+            if (nwritten < 0 )
+            {
+                perror("write");           
+            }
             break;
         }
         nleft -= nwritten;
@@ -92,6 +101,14 @@ ssize_t readn_nonblock(int fd, void *vptr, size_t n)
             {
                 //nread = 0 : 对方套接字关闭
                 //nread < 0 : 套接字错误
+                if (nread < 0)
+                {
+                    perror("read"); 
+                }
+                else
+                {
+                    printf("the peer socket is closed\n"); 
+                }
                 break;
             }
         }
@@ -124,6 +141,14 @@ ssize_t writen_nonblock(int fd, const void *vptr, size_t n)
             {
                 //nwritten= 0 : 对方套接字关闭
                 //nwritten< 0 : 套接字错误
+                if (nwritten < 0)
+                {
+                    perror("write"); 
+                }
+                else
+                {
+                    printf("the peer socket is closed\n"); 
+                }
                 break;
             }
         }
