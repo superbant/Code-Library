@@ -1,0 +1,129 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+CH	sha2.c	45;"	d	file:
+HMAC_SHA2_H	hmac_sha2.h	35;"	d
+MAJ	sha2.c	46;"	d	file:
+PACK32	sha2.c	66;"	d	file:
+PACK64	sha2.c	86;"	d	file:
+ROTL	sha2.c	44;"	d	file:
+ROTR	sha2.c	43;"	d	file:
+SHA224_BLOCK_SIZE	sha2.h	45;"	d
+SHA224_DIGEST_SIZE	sha2.h	37;"	d
+SHA256_BLOCK_SIZE	sha2.h	42;"	d
+SHA256_DIGEST_SIZE	sha2.h	38;"	d
+SHA256_EXP	sha2.c	112;"	d	file:
+SHA256_F1	sha2.c	48;"	d	file:
+SHA256_F2	sha2.c	49;"	d	file:
+SHA256_F3	sha2.c	50;"	d	file:
+SHA256_F4	sha2.c	51;"	d	file:
+SHA256_SCR	sha2.c	100;"	d	file:
+SHA2_H	sha2.h	35;"	d
+SHA2_TYPES	sha2.h	48;"	d
+SHA384_BLOCK_SIZE	sha2.h	44;"	d
+SHA384_DIGEST_SIZE	sha2.h	39;"	d
+SHA512_BLOCK_SIZE	sha2.h	43;"	d
+SHA512_DIGEST_SIZE	sha2.h	40;"	d
+SHA512_EXP	sha2.c	121;"	d	file:
+SHA512_F1	sha2.c	53;"	d	file:
+SHA512_F2	sha2.c	54;"	d	file:
+SHA512_F3	sha2.c	55;"	d	file:
+SHA512_F4	sha2.c	56;"	d	file:
+SHA512_SCR	sha2.c	106;"	d	file:
+SHFR	sha2.c	42;"	d	file:
+UNPACK32	sha2.c	58;"	d	file:
+UNPACK64	sha2.c	74;"	d	file:
+block	sha2.h	/^    unsigned char block[2 * SHA256_BLOCK_SIZE];$/;"	m	struct:__anon5
+block	sha2.h	/^    unsigned char block[2 * SHA512_BLOCK_SIZE];$/;"	m	struct:__anon6
+block_ipad	hmac_sha2.h	/^    unsigned char block_ipad[SHA224_BLOCK_SIZE];$/;"	m	struct:__anon1
+block_ipad	hmac_sha2.h	/^    unsigned char block_ipad[SHA256_BLOCK_SIZE];$/;"	m	struct:__anon2
+block_ipad	hmac_sha2.h	/^    unsigned char block_ipad[SHA384_BLOCK_SIZE];$/;"	m	struct:__anon3
+block_ipad	hmac_sha2.h	/^    unsigned char block_ipad[SHA512_BLOCK_SIZE];$/;"	m	struct:__anon4
+block_opad	hmac_sha2.h	/^    unsigned char block_opad[SHA224_BLOCK_SIZE];$/;"	m	struct:__anon1
+block_opad	hmac_sha2.h	/^    unsigned char block_opad[SHA256_BLOCK_SIZE];$/;"	m	struct:__anon2
+block_opad	hmac_sha2.h	/^    unsigned char block_opad[SHA384_BLOCK_SIZE];$/;"	m	struct:__anon3
+block_opad	hmac_sha2.h	/^    unsigned char block_opad[SHA512_BLOCK_SIZE];$/;"	m	struct:__anon4
+ctx_inside	hmac_sha2.h	/^    sha224_ctx ctx_inside;$/;"	m	struct:__anon1
+ctx_inside	hmac_sha2.h	/^    sha256_ctx ctx_inside;$/;"	m	struct:__anon2
+ctx_inside	hmac_sha2.h	/^    sha384_ctx ctx_inside;$/;"	m	struct:__anon3
+ctx_inside	hmac_sha2.h	/^    sha512_ctx ctx_inside;$/;"	m	struct:__anon4
+ctx_inside_reinit	hmac_sha2.h	/^    sha224_ctx ctx_inside_reinit;$/;"	m	struct:__anon1
+ctx_inside_reinit	hmac_sha2.h	/^    sha256_ctx ctx_inside_reinit;$/;"	m	struct:__anon2
+ctx_inside_reinit	hmac_sha2.h	/^    sha384_ctx ctx_inside_reinit;$/;"	m	struct:__anon3
+ctx_inside_reinit	hmac_sha2.h	/^    sha512_ctx ctx_inside_reinit;$/;"	m	struct:__anon4
+ctx_outside	hmac_sha2.h	/^    sha224_ctx ctx_outside;$/;"	m	struct:__anon1
+ctx_outside	hmac_sha2.h	/^    sha256_ctx ctx_outside;$/;"	m	struct:__anon2
+ctx_outside	hmac_sha2.h	/^    sha384_ctx ctx_outside;$/;"	m	struct:__anon3
+ctx_outside	hmac_sha2.h	/^    sha512_ctx ctx_outside;$/;"	m	struct:__anon4
+ctx_outside_reinit	hmac_sha2.h	/^    sha224_ctx ctx_outside_reinit;$/;"	m	struct:__anon1
+ctx_outside_reinit	hmac_sha2.h	/^    sha256_ctx ctx_outside_reinit;$/;"	m	struct:__anon2
+ctx_outside_reinit	hmac_sha2.h	/^    sha384_ctx ctx_outside_reinit;$/;"	m	struct:__anon3
+ctx_outside_reinit	hmac_sha2.h	/^    sha512_ctx ctx_outside_reinit;$/;"	m	struct:__anon4
+h	sha2.h	/^    uint32 h[8];$/;"	m	struct:__anon5
+h	sha2.h	/^    uint64 h[8];$/;"	m	struct:__anon6
+hmac_sha224	hmac_sha2.c	/^void hmac_sha224(const unsigned char *key, unsigned int key_size,$/;"	f
+hmac_sha224_ctx	hmac_sha2.h	/^} hmac_sha224_ctx;$/;"	t	typeref:struct:__anon1
+hmac_sha224_final	hmac_sha2.c	/^void hmac_sha224_final(hmac_sha224_ctx *ctx, unsigned char *mac,$/;"	f
+hmac_sha224_init	hmac_sha2.c	/^void hmac_sha224_init(hmac_sha224_ctx *ctx, const unsigned char *key,$/;"	f
+hmac_sha224_reinit	hmac_sha2.c	/^void hmac_sha224_reinit(hmac_sha224_ctx *ctx)$/;"	f
+hmac_sha224_update	hmac_sha2.c	/^void hmac_sha224_update(hmac_sha224_ctx *ctx, const unsigned char *message,$/;"	f
+hmac_sha256	hmac_sha2.c	/^void hmac_sha256(const unsigned char *key, unsigned int key_size,$/;"	f
+hmac_sha256_ctx	hmac_sha2.h	/^} hmac_sha256_ctx;$/;"	t	typeref:struct:__anon2
+hmac_sha256_final	hmac_sha2.c	/^void hmac_sha256_final(hmac_sha256_ctx *ctx, unsigned char *mac,$/;"	f
+hmac_sha256_init	hmac_sha2.c	/^void hmac_sha256_init(hmac_sha256_ctx *ctx, const unsigned char *key,$/;"	f
+hmac_sha256_reinit	hmac_sha2.c	/^void hmac_sha256_reinit(hmac_sha256_ctx *ctx)$/;"	f
+hmac_sha256_update	hmac_sha2.c	/^void hmac_sha256_update(hmac_sha256_ctx *ctx, const unsigned char *message,$/;"	f
+hmac_sha384	hmac_sha2.c	/^void hmac_sha384(const unsigned char *key, unsigned int key_size,$/;"	f
+hmac_sha384_ctx	hmac_sha2.h	/^} hmac_sha384_ctx;$/;"	t	typeref:struct:__anon3
+hmac_sha384_final	hmac_sha2.c	/^void hmac_sha384_final(hmac_sha384_ctx *ctx, unsigned char *mac,$/;"	f
+hmac_sha384_init	hmac_sha2.c	/^void hmac_sha384_init(hmac_sha384_ctx *ctx, const unsigned char *key,$/;"	f
+hmac_sha384_reinit	hmac_sha2.c	/^void hmac_sha384_reinit(hmac_sha384_ctx *ctx)$/;"	f
+hmac_sha384_update	hmac_sha2.c	/^void hmac_sha384_update(hmac_sha384_ctx *ctx, const unsigned char *message,$/;"	f
+hmac_sha512	hmac_sha2.c	/^void hmac_sha512(const unsigned char *key, unsigned int key_size,$/;"	f
+hmac_sha512_ctx	hmac_sha2.h	/^} hmac_sha512_ctx;$/;"	t	typeref:struct:__anon4
+hmac_sha512_final	hmac_sha2.c	/^void hmac_sha512_final(hmac_sha512_ctx *ctx, unsigned char *mac,$/;"	f
+hmac_sha512_init	hmac_sha2.c	/^void hmac_sha512_init(hmac_sha512_ctx *ctx, const unsigned char *key,$/;"	f
+hmac_sha512_reinit	hmac_sha2.c	/^void hmac_sha512_reinit(hmac_sha512_ctx *ctx)$/;"	f
+hmac_sha512_update	hmac_sha2.c	/^void hmac_sha512_update(hmac_sha512_ctx *ctx, const unsigned char *message,$/;"	f
+len	sha2.h	/^    unsigned int len;$/;"	m	struct:__anon5
+len	sha2.h	/^    unsigned int len;$/;"	m	struct:__anon6
+main	hmac_sha2.c	/^int main(void)$/;"	f
+main	sha2.c	/^int main(void)$/;"	f
+sha224	sha2.c	/^void sha224(const unsigned char *message, unsigned int len,$/;"	f
+sha224_ctx	sha2.h	/^typedef sha256_ctx sha224_ctx;$/;"	t
+sha224_final	sha2.c	/^void sha224_final(sha224_ctx *ctx, unsigned char *digest)$/;"	f
+sha224_h0	sha2.c	/^uint32 sha224_h0[8] =$/;"	v
+sha224_init	sha2.c	/^void sha224_init(sha224_ctx *ctx)$/;"	f
+sha224_update	sha2.c	/^void sha224_update(sha224_ctx *ctx, const unsigned char *message,$/;"	f
+sha256	sha2.c	/^void sha256(const unsigned char *message, unsigned int len, unsigned char *digest)$/;"	f
+sha256_ctx	sha2.h	/^} sha256_ctx;$/;"	t	typeref:struct:__anon5
+sha256_final	sha2.c	/^void sha256_final(sha256_ctx *ctx, unsigned char *digest)$/;"	f
+sha256_h0	sha2.c	/^uint32 sha256_h0[8] =$/;"	v
+sha256_init	sha2.c	/^void sha256_init(sha256_ctx *ctx)$/;"	f
+sha256_k	sha2.c	/^uint32 sha256_k[64] =$/;"	v
+sha256_transf	sha2.c	/^void sha256_transf(sha256_ctx *ctx, const unsigned char *message,$/;"	f
+sha256_update	sha2.c	/^void sha256_update(sha256_ctx *ctx, const unsigned char *message,$/;"	f
+sha384	sha2.c	/^void sha384(const unsigned char *message, unsigned int len,$/;"	f
+sha384_ctx	sha2.h	/^typedef sha512_ctx sha384_ctx;$/;"	t
+sha384_final	sha2.c	/^void sha384_final(sha384_ctx *ctx, unsigned char *digest)$/;"	f
+sha384_h0	sha2.c	/^uint64 sha384_h0[8] =$/;"	v
+sha384_init	sha2.c	/^void sha384_init(sha384_ctx *ctx)$/;"	f
+sha384_update	sha2.c	/^void sha384_update(sha384_ctx *ctx, const unsigned char *message,$/;"	f
+sha512	sha2.c	/^void sha512(const unsigned char *message, unsigned int len,$/;"	f
+sha512_ctx	sha2.h	/^} sha512_ctx;$/;"	t	typeref:struct:__anon6
+sha512_final	sha2.c	/^void sha512_final(sha512_ctx *ctx, unsigned char *digest)$/;"	f
+sha512_h0	sha2.c	/^uint64 sha512_h0[8] =$/;"	v
+sha512_init	sha2.c	/^void sha512_init(sha512_ctx *ctx)$/;"	f
+sha512_k	sha2.c	/^uint64 sha512_k[80] =$/;"	v
+sha512_transf	sha2.c	/^void sha512_transf(sha512_ctx *ctx, const unsigned char *message,$/;"	f
+sha512_update	sha2.c	/^void sha512_update(sha512_ctx *ctx, const unsigned char *message,$/;"	f
+test	hmac_sha2.c	/^void test(const char *vector, unsigned char *digest,$/;"	f
+test	sha2.c	/^void test(const char *vector, unsigned char *digest,$/;"	f
+tot_len	sha2.h	/^    unsigned int tot_len;$/;"	m	struct:__anon5
+tot_len	sha2.h	/^    unsigned int tot_len;$/;"	m	struct:__anon6
+uint32	sha2.h	/^typedef unsigned int  uint32;$/;"	t
+uint64	sha2.h	/^typedef unsigned long long uint64;$/;"	t
+uint8	sha2.h	/^typedef unsigned char uint8;$/;"	t

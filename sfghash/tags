@@ -1,0 +1,75 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+GH_COPYKEYS	sfghash.h	53;"	d
+GH_USERKEYS	sfghash.h	54;"	d
+SFDICT	sfghash.h	/^} SFGHASH, SFDICT;$/;"	t	typeref:struct:_sfghash
+SFGHASH	sfghash.h	/^} SFGHASH, SFDICT;$/;"	t	typeref:struct:_sfghash
+SFGHASH_ERR	sfghash.h	46;"	d
+SFGHASH_INTABLE	sfghash.h	48;"	d
+SFGHASH_NODE	sfghash.h	/^} SFGHASH_NODE;$/;"	t	typeref:struct:_sfghash_node
+SFGHASH_NOMEM	sfghash.h	45;"	d
+SFGHASH_OK	sfghash.h	47;"	d
+SFHASHFCN	sfhashfcn.h	/^} SFHASHFCN;$/;"	t	typeref:struct:_SFHASHFCN
+SFHASHFCN_INCLUDE	sfhashfcn.h	27;"	d
+SF_PRIME_TABLE	sfprimetable.h	24;"	d
+_SFGHASH_	sfghash.h	34;"	d
+_SFHASHFCN	sfhashfcn.h	/^typedef struct _SFHASHFCN {$/;"	s
+_sfghash	sfghash.h	/^typedef struct _sfghash$/;"	s
+_sfghash_node	sfghash.h	/^typedef struct _sfghash_node$/;"	s
+cnode	sfghash.h	/^  SFGHASH_NODE * cnode; \/* findfirst\/next node ptr *\/$/;"	m	struct:_sfghash
+count	sfghash.h	/^  unsigned       count;  \/* total # nodes in table *\/$/;"	m	struct:_sfghash
+crow	sfghash.h	/^  int            crow;    \/* findfirst\/next row in table *\/$/;"	m	struct:_sfghash
+data	sfghash.h	/^  void *data;  \/* The users data, this is never copied! *\/$/;"	m	struct:_sfghash_node
+final	sfhashfcn.h	46;"	d
+hardener	sfhashfcn.h	/^ unsigned hardener;$/;"	m	struct:_SFHASHFCN
+hash_fcn	sfhashfcn.h	/^ unsigned (*hash_fcn)(struct _SFHASHFCN * p,$/;"	m	struct:_SFHASHFCN
+key	sfghash.h	/^  const void * key;   \/* Copy of, or Pointer to, the Users key *\/$/;"	m	struct:_sfghash_node
+keycmp_fcn	sfhashfcn.h	/^ int      (*keycmp_fcn)( const void *s1,$/;"	m	struct:_SFHASHFCN
+keysize	sfghash.h	/^  int          keysize;   \/* bytes in key, if < 0 -> keys are strings *\/$/;"	m	struct:_sfghash
+main	sfghash.c	/^int main ( int argc, char ** argv )$/;"	f
+mix	sfhashfcn.h	36;"	d
+movetofront	sfghash.c	/^static void movetofront( SFGHASH *t , int index, SFGHASH_NODE * n )$/;"	f	file:
+myfree	sfghash.c	/^void myfree ( void * p )$/;"	f
+next	sfghash.h	/^  struct _sfghash_node * next, * prev;$/;"	m	struct:_sfghash_node	typeref:struct:_sfghash_node::_sfghash_node
+nrows	sfghash.h	/^  int             nrows;  \/* # rows int the hash table use a prime number 211, 9871 *\/$/;"	m	struct:_sfghash
+prev	sfghash.h	/^  struct _sfghash_node * next, * prev;$/;"	m	struct:_sfghash_node	typeref:struct:_sfghash_node::
+prime_table0	sfprimetable.c	/^unsigned prime_table0[1024]={$/;"	v	file:
+prime_table1	sfprimetable.c	/^unsigned prime_table1[]={$/;"	v	file:
+prime_table2	sfprimetable.c	/^unsigned prime_table2[1024]={$/;"	v	file:
+prime_table3	sfprimetable.c	/^unsigned prime_table3[1024]={$/;"	v	file:
+rot	sfhashfcn.h	34;"	d
+s_alloc	sfghash.c	/^void * s_alloc( int n )$/;"	f	file:
+s_free	sfghash.c	/^void s_free( void * p )$/;"	f	file:
+scale	sfhashfcn.h	/^ unsigned scale;$/;"	m	struct:_SFHASHFCN
+seed	sfhashfcn.h	/^ unsigned seed;$/;"	m	struct:_SFHASHFCN
+sf_nearest_prime	sfprimetable.c	/^int sf_nearest_prime( int n )$/;"	f
+sfghash_add	sfghash.c	/^int sfghash_add( SFGHASH * t, const void * const key, void * const data )$/;"	f
+sfghash_count	sfghash.c	/^int sfghash_count( SFGHASH * t )$/;"	f
+sfghash_delete	sfghash.c	/^void sfghash_delete( SFGHASH * h )$/;"	f
+sfghash_find	sfghash.c	/^void * sfghash_find( SFGHASH * t, const void * const key)$/;"	f
+sfghash_find2	sfghash.c	/^int sfghash_find2(SFGHASH *t, void *key, void **data)$/;"	f
+sfghash_find_node	sfghash.c	/^SFGHASH_NODE * sfghash_find_node( SFGHASH * t, const void * const key)$/;"	f
+sfghash_findfirst	sfghash.c	/^SFGHASH_NODE * sfghash_findfirst( SFGHASH * t )$/;"	f
+sfghash_findfirst1	sfghash.c	/^SFGHASH_NODE * sfghash_findfirst1( SFGHASH * t )$/;"	f
+sfghash_findnext	sfghash.c	/^SFGHASH_NODE * sfghash_findnext( SFGHASH * t )$/;"	f
+sfghash_findnext1	sfghash.c	/^SFGHASH_NODE * sfghash_findnext1( SFGHASH * t )$/;"	f
+sfghash_free_node	sfghash.c	/^static int sfghash_free_node( SFGHASH * t, unsigned index, SFGHASH_NODE * hnode )$/;"	f	file:
+sfghash_new	sfghash.c	/^SFGHASH * sfghash_new( int nrows, int keysize, int userkeys, void (*userfree)(void*p) )$/;"	f
+sfghash_next	sfghash.c	/^static void sfghash_next( SFGHASH * t )$/;"	f	file:
+sfghash_remove	sfghash.c	/^int sfghash_remove( SFGHASH * t, const void * const key)$/;"	f
+sfghash_set_keyops	sfghash.c	/^int sfghash_set_keyops( SFGHASH *h ,$/;"	f
+sfghash_splaymode	sfghash.c	/^void sfghash_splaymode( SFGHASH * t, int n )$/;"	f
+sfhashfcn	sfghash.h	/^  SFHASHFCN    * sfhashfcn;$/;"	m	struct:_sfghash
+sfhashfcn_free	sfhashfcn.c	/^void sfhashfcn_free( SFHASHFCN * p )$/;"	f
+sfhashfcn_hash	sfhashfcn.c	/^unsigned sfhashfcn_hash( SFHASHFCN * p, unsigned char *d, int n )$/;"	f
+sfhashfcn_new	sfhashfcn.c	/^SFHASHFCN * sfhashfcn_new( int m )$/;"	f
+sfhashfcn_set_keyops	sfhashfcn.c	/^int sfhashfcn_set_keyops( SFHASHFCN *h,$/;"	f
+sfhashfcn_static	sfhashfcn.c	/^void sfhashfcn_static( SFHASHFCN * p )$/;"	f
+splay	sfghash.h	/^  int splay;$/;"	m	struct:_sfghash
+table	sfghash.h	/^  SFGHASH_NODE ** table;  \/* array of node ptr's *\/$/;"	m	struct:_sfghash
+userfree	sfghash.h	/^  void         (*userfree)( void * );$/;"	m	struct:_sfghash
+userkey	sfghash.h	/^  int          userkey;   \/* user owns the key *\/$/;"	m	struct:_sfghash
