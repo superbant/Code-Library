@@ -19,13 +19,13 @@ Plug 'vim-airline/vim-airline'
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'vim-scripts/a.vim'
 Plug 'vim-scripts/Tagbar'
+Plug 'vim-scripts/OmniCppComplete'
 
 "Plugin 'The-NERD-Commenter'
 "Plugin 'taglist.vim'
 "Plugin 'ctrlp.vim'
 "Plugin 'bufexplorer.zip'
 "Plugin 'winmanager'
-"Plugin 'OmniCppComplete'
 "Plugin 'echofunc.vim'
 "Plugin 'godlygeek/tabular'
 "Plugin 'Valloric/YouCompleteMe'
@@ -270,14 +270,12 @@ autocmd! User GoyoLeave Limelight!
 "       tags配置                                     *  
 "                                                    *
 "*****************************************************  
-"ctags -I __THROW -I __attribute_pure__ -I __nonnull -I __attribute__ --file-scope=yes  --languages=c,c++ --links=yes --c++-kinds=+p --fields=+ialS --extra=+q -R -f ~/.vim/systags /usr/include /usr/local/include
-
-"ctags -I __THROW -I __attribute_pure__ -I __nonnull -I __attribute__ --file-scope=yes  --languages=c,c++ --links=yes --c++-kinds=+p --fields=+ialS --extra=+q -f ~/.vim/systags /usr/include/* /usr/include/sys/* /usr/include/bits/* /usr/include/netinet/* /usr/include/arpa/* /usr/include/mysql/* /usr/include/x86_64-linux-gnu/*
+"ctags -I __THROW -I __attribute_pure__ -I __nonnull -I __attribute__ --if0=yes --languages=c,c++ --c-kinds=+p --c++-kinds=+p --fields=+iaS --extra=+q -R -f ~/.vim/systags /usr/include /usr/local/include
 
 "//;不可省略 表示当前目录不存在tags，则在父目录中寻找
 set tags=tags; 
 set tags+=/root/.vim/systags
-set path+=/usr/include,/usr/local/include
+set path+=.,/usr/include/,/usr/local/include,,/root/yanwf/svn/gapnet/gapnet_v3.0/**
 "*****************************************************  
 "                                                    *
 "       Cscope配置                                   *  
@@ -287,7 +285,7 @@ if has("cscope")
 	set csprg=/usr/bin/cscope " 指定用来执行cscope的命令
 	set csto=1 " 设置cstag命令查找次序：0先找cscope数据库再找标签文件；1先找标签文件再找cscope数据库
 	set cst " 同时搜索cscope数据库和标签文件
-    set cscopequickfix=s-,c-,d-,i-,t-,e- " 使用QuickFix窗口来显示cscope查找结果
+    "set cscopequickfix=s-,c-,d-,i-,t-,e- " 使用QuickFix窗口来显示cscope查找结果
 	set nocsverb
 	if filereadable("cscope.out") " 若当前目录下存在cscope数据库，添加该数据库到vim
 		cs add cscope.out
