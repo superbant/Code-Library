@@ -11,24 +11,59 @@ endif
 "*****************************************************  
 
 call plug#begin('~/.vim/plugged')
-Plug 'junegunn/goyo.vim'
-Plug 'junegunn/limelight.vim'
-Plug 'junegunn/vim-easy-align'
-Plug 'tomasr/molokai'
-Plug 'vim-airline/vim-airline'
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-Plug 'vim-scripts/a.vim'
-Plug 'vim-scripts/Tagbar'
-Plug 'vim-scripts/OmniCppComplete'
 
-"Plugin 'The-NERD-Commenter'
-"Plugin 'taglist.vim'
-"Plugin 'ctrlp.vim'
-"Plugin 'bufexplorer.zip'
-"Plugin 'winmanager'
-"Plugin 'echofunc.vim'
-"Plugin 'godlygeek/tabular'
-"Plugin 'Valloric/YouCompleteMe'
+Plug 'tomasr/molokai'
+"树形目录
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'jistr/vim-nerdtree-tabs'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+
+Plug 'scrooloose/nerdcommenter'
+Plug 'tpope/vim-commentary'
+
+Plug 'vim-scripts/a.vim'
+
+Plug 'vim-scripts/Tagbar'
+
+"代码补全
+Plug 'Shougo/neocomplete.vim'  "+lua
+Plug 'vim-scripts/OmniCppComplete'
+Plug 'Raimondi/delimitMate'
+Plug 'tpope/vim-surround'
+
+"Plug 'Shougo/deoplete.nvim' "+python3
+
+Plug 'vim-scripts/taglist.vim'
+
+Plug 'vim-scripts/c.vim'
+
+Plug 'vim-scripts/echofunc.vim'
+
+Plug 'ctrlpvim/ctrlp.vim'
+
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
+
+"代码检测
+Plug 'dense-analysis/ale'
+"代码对齐
+Plug 'godlygeek/tabular'
+"格式化
+Plug 'junegunn/vim-easy-align'
+xmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
+"快速跳转
+Plug 'justinmk/vim-sneak'
+"快速选择
+Plug 'terryma/vim-expand-region'
+map K <Plug>(expand_region_expand)
+map J <Plug>(expand_region_shrink)
+"版本控制
+Plug 'mhinz/vim-signify'
+"多光标
+Plug 'terryma/vim-multiple-cursors'
 call plug#end()
 
 "*****************************************************  
@@ -36,8 +71,6 @@ call plug#end()
 "       general配置                                  *  
 "                                                    *
 "*****************************************************  
-
-
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
 " If "mapleader" is not set or empty, a backslash is used  instead.
@@ -45,10 +78,11 @@ let mapleader = ","
 let g:mapleader = ","
 
 " 配色方案 
+colorscheme molokai 
 set t_Co=256
+
 " Switch syntax highlighting on, when the terminal has colors
 syntax enable
-
 
 "打开man手册，分割窗口 <leader>K
 runtime! ftplugin/man.vim
@@ -64,8 +98,8 @@ set hidden
 "复制之前的缩进
 set copyindent
 
-":substitute" flag 'g' is default on
-set gdefault
+"Threshold for reporting number of lines changed
+set report=0
 
 " Set to auto read when a file is changed from the outside
 set autoread
@@ -75,6 +109,9 @@ set autowrite
 
 "显示行号
 set number
+"set relativenumber
+
+set ttyfast
 
 "历史记录数
 set history=1000
@@ -93,7 +130,7 @@ set backspace=eol,start,indent
 set whichwrap+=b,s,<,>,[,],h,l
 
 "带有如下符号的单词不要换行分割
-set iskeyword=@,48-57,_
+set iskeyword+=$,@,%,#
 
 " Ignore case when searching
 set ignorecase
@@ -116,9 +153,6 @@ set magic
 " Show matching brackets when text indicator is over them
 set showmatch
 
-" no visualbell
-set novisualbell
-
 "匹配括号高亮的时间（单位是十分之一秒）
 set matchtime=1
 
@@ -127,6 +161,8 @@ set matchpairs=(:),{:},[:],<:>
 
 " No annoying sound on errors
 set noerrorbells
+
+" no visualbell
 set novisualbell
 
 " Add a bit extra margin to the left
@@ -144,19 +180,17 @@ set scrolloff=3
 
 " Always show the status line
 set laststatus=2
-"set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}:%{&fenc!=''?&fenc:&enc}]\ [TYPE=%Y]\ [ROW=%03l/%L(%p%%)]\ [COL=%03v]
+set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}:%{&fenc!=''?&fenc:&enc}]\ [TYPE=%Y]\ [ROW=%03l/%L(%p%%)]\ [COL=%03v]
 
 "Set utf8 as standard encoding 
-"en_US as the standard language
-
-set encoding=utf-8        "vim 内部使用的编码方式
-set termencoding=utf-8    "用于屏幕显示
+set encoding=utf-8
+set termencoding=utf-8
+"set termencoding=gb2312
 set langmenu=zh_CN.UTF-8
-set helplang=cn
-set fileformats=unix,dos
-set fenc=utf-8
+set fileencoding=utf-8
+"set fileencoding=gb2312
 "cp936 = gb2312
-set fencs=utf-8,ucs-bom,cp936,gb18030,big5,euc-jp,euc-kr,latin1 
+set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
 
 " Use spaces instead of tabs, 1 tab == 4 spaces
 set expandtab
@@ -168,11 +202,10 @@ set smarttab
 " Linebreak on 100 characters
 set lbr
 set textwidth=100
-set formatoptions+=t
+set formatoptions+=qrnlt
 
 "自动换行
 set wrap
-set cindent
 set autoindent
 set smartindent 
 
@@ -182,43 +215,11 @@ set linespace=0
 "增强模式中的命令行自动完成操作
 set wildmenu
 
-" Treat long lines as break lines (useful when moving around in them)
-map j gj
-map k gk
-
-" Disable highlight when <leader><cr> is pressed
-map <silent> <leader><cr> :noh<cr>
-
-" Smart way to move between windows
-noremap <C-j> <C-W>j
-noremap <C-k> <C-W>k
-noremap <C-h> <C-W>h
-noremap <C-l> <C-W>l
-
-set foldenable           " enable folden
-set foldmethod=manual    " manual : Folds are created manually.
-                         " indent : Lines with equal indent form a fold.
-                         " expr   : ‘foldexpr’ gives the fold level of a line.
-                         " marker : Markers are used to specify folds.
-                         " syntax : Syntax highlighting items specify folds.
-                         " diff   : Fold text that is not changed.
-set foldopen=block,hor,mark,percent,quickfix,tag " what movements to open folds on
-"set foldclose=all
-
-" use space to folden
-nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
+" Remember info about open buffers on close
+set viminfo^=%
 
 " Turn backup off, since most stuff is in SVN, git et.c anyway...
-set nobackup
-set nowb
 set noswapfile
-
-" Opens a new tab with the current buffer's path
-" Super useful when editing files in the same directory
-map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
-
-" Switch CWD to the directory of the open buffer
-map <leader>cd :cd %:p:h<cr>:pwd<cr>
 
 " Return to last edit position when opening files (You want this!)
 autocmd BufReadPost *
@@ -226,44 +227,40 @@ autocmd BufReadPost *
 			\   exe "normal! g`\"" |
 			\ endif
 
-" Remember info about open buffers on close
-set viminfo^=%
-
-" Remove the Windows ^M - when the encodings gets messed up
-noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
-
-" Toggle paste mode on and off
-map <leader>pp :setlocal paste!<cr>
-
 " :W sudo saves the file 
 " (useful for handling the permission-denied error)
 command W w !sudo tee % > /dev/null
 
-" Mappings {
-   map <F12> ggVGg?
-   map <F4> :!ctags -R --fields=+iaS --c++-kinds=+p --extra=+q<cr>
+" Treat long lines as break lines (useful when moving around in them)
+map j gj
+map k gk
 
-   " Make Arrow Keys Useful {
-      "map <left> <ESC>:NERDTreeToggle<RETURN>
-      "map <right> <ESC>:Tlist<RETURN>
-   " }
-" }
+" Disable highlight when <leader><cr> is pressed
+map <silent> <leader><cr> :noh<cr>
+
+" Opens a new tab with the current buffer's path
+" Super useful when editing files in the same directory
+map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
+
+map <left> <ESC>:NERDTreeToggle<RETURN>
+map <right> <ESC>:Tlist<RETURN>
+
+" Toggle paste mode on and off
+map <leader>pp :setlocal paste!<cr>
+
+map <F12> ggVGg?
+map <F4> :!ctags -R --languages=c,c++ --c-kinds=+p --c++-kinds=+p --fields=+iaS --extra=+q <cr>
 
 
+" Smart way to move between windows
+noremap <C-j> <C-W>j
+noremap <C-k> <C-W>k
+noremap <C-h> <C-W>h
+noremap <C-l> <C-W>l
 
-"*****************************************************  
-"                                                    *
-"       colorscheme  goyo limelight
-"                                                    *
-"*****************************************************  
-colorscheme molokai 
-"limelight
-""<Leader>l触发limelight功能
-nmap <Leader>l :Goyo<CR>
-xmap <Leader>l :Goyo<CR>
-"进入goyo模式后自动触发limelight,退出后则关闭
-autocmd! User GoyoEnter Limelight
-autocmd! User GoyoLeave Limelight!
+" Remove the Windows ^M - when the encodings gets messed up
+noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
+
 
 "*****************************************************  
 "                                                    *
@@ -275,7 +272,8 @@ autocmd! User GoyoLeave Limelight!
 "//;不可省略 表示当前目录不存在tags，则在父目录中寻找
 set tags=tags; 
 set tags+=/root/.vim/systags
-set path+=.,/usr/include/,/usr/local/include,,/root/yanwf/svn/gapnet/gapnet_v3.0/**
+set tags+=/root/.vim/cpptags/cpptags
+set path+=/root/yanwf/svn/gapnet/gapnet_v3.0/base,/root/yanwf/svn/gapnet/gapnet_v3.0/interface
 "*****************************************************  
 "                                                    *
 "       Cscope配置                                   *  
@@ -285,7 +283,7 @@ if has("cscope")
 	set csprg=/usr/bin/cscope " 指定用来执行cscope的命令
 	set csto=1 " 设置cstag命令查找次序：0先找cscope数据库再找标签文件；1先找标签文件再找cscope数据库
 	set cst " 同时搜索cscope数据库和标签文件
-    "set cscopequickfix=s-,c-,d-,i-,t-,e- " 使用QuickFix窗口来显示cscope查找结果
+    set cscopequickfix=s-,c-,d-,i-,t-,e-,a- " 使用QuickFix窗口来显示cscope查找结果
 	set nocsverb
 	if filereadable("cscope.out") " 若当前目录下存在cscope数据库，添加该数据库到vim
 		cs add cscope.out
@@ -331,34 +329,31 @@ nmap <leader>va :vert scs find a <C-R>=expand("<cword>")<CR><CR>
 
 "*****************************************************  
 "                                                    *
-"       QuickFix 配置                                *  
+"       NERDCommenter配置                            * 
 "                                                    *
 "*****************************************************  
-" 按下F5，执行make clean
-map <F5> :make<CR><CR><CR> :copen<CR><CR>
-" 按下F6，光标移到上一个错误所在的行
-map <F6> :cp<CR>
-" 按下F7，光标移到下一个错误所在的行
-map <F7> :cn<CR>
-" 按下F8，执行make编译程序，并打开quickfix窗口，显示编译信息
-map <F8> :make clean<CR><CR><CR>
-
-"*****************************************************  
-"                                                    *
-"       The-NERD-Commenter配置                       *  
-"                                                    *
-"*****************************************************  
-"快速批量注释,方便好用 The-NERD-Commenter
 "<leader>cc 注释当前选中文本
 "<leader>cu 取消选中文本块的注释。
+"<leader>cm 只用一组符号注释
+"<leader>cA 在行尾添加注释
+"<leader>c$ /* 注释 */
+"<leader>cs /* 块注释 */
+"<leader>cy 注释并复制
+"<leader>c<space> 注释/取消注释
+"<leader>ca 切换　// 和 /* */
+let g:NERDSpaceDelims = 1
+let g:NERDDefaultAlign = 'left'
+let g:NERDCustomDelimiters = {
+            \ 'javascript': { 'left': '//', 'leftAlt': '/**', 'rightAlt': '*/' },
+            \ 'less': { 'left': '/**', 'right': '*/' }
+        \ }
 
 "*****************************************************  
 "                                                    *
 "      The-NERD-tree配置                             *  
 "                                                    *
 "*****************************************************  
-"nmap <leader>nt :NERDTree<cr>:set rnu<cr>
-nmap <leader>nt :NERDTree<cr>
+nmap <leader>nt :NERDTreeToggle<cr>
 let NERDTreeChDirMode=2
 let NERDTreeWinSize=35
 let NERDTreeShowBookmarks=1
@@ -368,10 +363,21 @@ let NERDTreeShowLineNumbers=1
 let NERDTreeHighlightCursorline=1
 let NERDTreeWinPos="left"
 let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.obj$', '\.o$', '\.so$', '\.egg$', '^\.git$', '^\.svn$', '^\.hg$', '\~$', '\.swp$']
-" Automatically open a NERDTree if no files where specified
-autocmd vimenter * if !argc() | NERDTree | endif
-"close vim if the only window left open is a NERDTree
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | end
+
+let g:NERDTreeShowIgnoredStatus = 1
+let g:nerdtree_tabs_open_on_console_startup=1
+let g:NERDTreeIndicatorMapCustom = {
+    \ "Modified"  : "✹",
+    \ "Staged"    : "✚",
+    \ "Untracked" : "✭",
+    \ "Renamed"   : "➜",
+    \ "Unmerged"  : "═",
+    \ "Deleted"   : "✖",
+    \ "Dirty"     : "✗",
+    \ "Clean"     : "✔︎",
+    \ 'Ignored'   : '☒',
+    \ "Unknown"   : "?"
+    \ }
 
 
 "*****************************************************  
@@ -416,24 +422,6 @@ let g:tagbar_autofocus = 1
 
 "*****************************************************  
 "                                                    *
-"   快速移动EasyMotion配置                           *  
-"                                                    *
-"*****************************************************  
-"help easymotion <leader><leader> w
-
-"*****************************************************  
-"                                                    *
-"       airline配置                                 *  
-"                                                    *
-"*****************************************************  
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#buffer_nr_show = 1
-let g:airline#extensions#whitespace#enabled = 0
-let g:airline#extensions#whitespace#symbol = '!'
-
-
-"*****************************************************  
-"                                                    *
 "       echofunc配置                                 *  
 "                                                    *
 "*****************************************************  
@@ -441,56 +429,115 @@ let g:EchoFuncKeyNext='<leader>n'
 let g:EchoFuncKeyPrev='<leader>p'
 let g:EchoFuncAutoStartBalloonDeclaration = 1
 
-"*****************************************************  
-"                                                    *
-"        ctrlp配置                                   *  
-"                                                    *
-"*****************************************************  
-set wildignore+=*.o,*~,*.pyc,.git/*,.hg/*,.svn/*
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.png,*.jpg,*.jpeg,*.gif " MacOSX/Linux
-let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
-
-"*****************************************************  
-"                                                    *
-"        winmanager配置                              *  
-"                                                    *
-"*****************************************************  
-"快捷键打开WinManager  在fileexplorer窗口中按<c-n>可以切换到bufexplorer窗口。
-nmap <leader>wm :WMToggle<cr>
-let g:winManagerWindowLayout="TagList|FileExplorer,BufExplorer" 
-let g:persistentBehaviour=0 "所有编辑文件都关闭，退出vim
 
 "*****************************************************  
 "                                                    *
 "        omnicppcomplete配置                         *  
 "                                                    *
 "*****************************************************  
-set completeopt=menu,menuone,longest  
+set completeopt=menu,menuone,longest
 let OmniCpp_MayCompleteDot = 1 " autocomplete with .
 let OmniCpp_MayCompleteArrow = 1 " autocomplete with ->
 let OmniCpp_MayCompleteScope = 1 " autocomplete with ::
-let OmniCpp_SelectFirstItem = 2 " select first item (but don't insert)
-let OmniCpp_NamespaceSearch = 2 " search namespaces in this and included files
+let OmniCpp_NamespaceSearch = 0 " search namespaces in this and included files
 let OmniCpp_ShowPrototypeInAbbr = 1 " show function prototype in popup window
-let OmniCpp_GlobalScopeSearch=1 " enable the global scope search
 let OmniCpp_DisplayMode=1 " Class scope completion mode: always show all members
-let OmniCpp_DefaultNamespaces=["std"]
 let OmniCpp_ShowScopeInAbbr=1 " show scope in abbreviation and remove the last column
-let OmniCpp_ShowAccess=1
+let OmniCpp_DefaultNamespaces = ["std", "gapnet"]
 
 "*****************************************************  
 "                                                    *
-"           YouCompleteMe配置                        *  
+"        neocomplete配置                             *
 "                                                    *
 "*****************************************************  
-"配置默认的ycm_extra_conf.py  
-"let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'   
-   
-"按,jd 会跳转到定义  
-"nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>     
-   
-"打开vim时不再询问是否加载ycm_extra_conf.py配置  
-"let g:ycm_confirm_extra_conf=0     
-   
-"使用ctags生成的tags文件  
-"let g:ycm_collect_identifiers_from_tag_files = 1   
+"Note: This option must be set in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
+" Disable AutoComplPop.
+let g:acp_enableAtStartup = 0
+" Use neocomplete.
+let g:neocomplete#enable_at_startup = 1
+" Use smartcase.
+let g:neocomplete#enable_smart_case = 1
+" Set minimum syntax keyword length.
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+
+" Define dictionary.
+let g:neocomplete#sources#dictionary#dictionaries = {
+    \ 'default' : '',
+    \ 'vimshell' : $HOME.'/.vimshell_hist',
+    \ 'scheme' : $HOME.'/.gosh_completions'
+        \ }
+
+" Define keyword.
+if !exists('g:neocomplete#keyword_patterns')
+    let g:neocomplete#keyword_patterns = {}
+endif
+let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+
+" Plugin key-mappings.
+inoremap <expr><C-g>     neocomplete#undo_completion()
+inoremap <expr><C-l>     neocomplete#complete_common_string()
+
+" Recommended key-mappings.
+" <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+  return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
+  " For no inserting <CR> key.
+  "return pumvisible() ? "\<C-y>" : "\<CR>"
+endfunction
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+" Close popup by <Space>.
+"inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
+
+" AutoComplPop like behavior.
+"let g:neocomplete#enable_auto_select = 1
+
+" Shell like behavior(not recommended).
+"set completeopt+=longest
+"let g:neocomplete#enable_auto_select = 1
+"let g:neocomplete#disable_auto_complete = 1
+"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
+
+" Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+" Enable heavy omni completion.
+if !exists('g:neocomplete#sources#omni#input_patterns')
+  let g:neocomplete#sources#omni#input_patterns = {}
+endif
+"let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+"let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+
+" For perlomni.vim setting.
+" https://github.com/c9s/perlomni.vim
+let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+
+
+"*****************************************************  
+"                                                    *
+"        vim-airline                                     *  
+"                                                    *
+"*****************************************************  
+let g:airline_theme='papercolor'
+
+
+
+"*****************************************************  
+"                                                    *
+"   vim-instant-markdown                             *  
+"                                                    *
+"*****************************************************  
+
+let g:instant_markdown_slow = 1
+let g:instant_markdown_autostart = 0
+":InstantMarkdownPreview
+
